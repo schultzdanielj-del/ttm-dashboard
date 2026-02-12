@@ -234,8 +234,8 @@ function App() {
       <div style={{ background: '#2a2a2a', padding: '8px', borderRadius: '6px', marginBottom: '6px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <h1 style={{ fontSize: '15px', marginBottom: '2px', fontWeight: 600 }}>Three Target Method</h1>
-            <div style={{ fontSize: '11px', color: '#888' }}>{username}</div>
+            <h1 style={{ fontSize: '15px', marginBottom: '2px', fontWeight: 600 }}>{username}'s Program</h1>
+            <div style={{ fontSize: '11px', color: '#888' }}>Three Target Method</div>
           </div>
         </div>
         <div style={{ fontSize: '13px', color: '#888', marginTop: '4px' }}>Tap workout to expand</div>

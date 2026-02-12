@@ -1,28 +1,25 @@
-# Three Target Method Dashboard
+# TTM Dashboard
 
-Mobile-first dashboard for TTM Discord coaching clients.
+Web-based dashboard for Three Target Method fitness coaching. Provides personalized workout tracking with PR history, deload counter, and core foods logging.
 
 ## Features
 
-- **Deload Progress Tracking** - Visual progress bar showing workout completion
-- **Workout Management** - Collapsible workouts with PR display
-- **Warmup/Feeler Calculations** - Automatic weight calculations (50% warmup, 75% feeler)
-- **Core Foods Tracking** - 7-day check-in history with protein/veggie compliance
-- **PR Logging** - Simple weight/reps input with Log button
+- ✅ Unique access code authentication (one code per user)
+- ✅ Personalized workout program display
+- ✅ Best PR display for each exercise
+- ✅ Deload counter (0/6 to 6/6 tracking)
+- ✅ Workout logging with automatic PR detection
+- ✅ Core foods daily check-in
+- ✅ Mobile-first responsive design
+- ✅ Dark theme (#1a1a1a background, compact spacing)
 
 ## Tech Stack
 
 - React + TypeScript
 - Vite
 - Tailwind CSS
-- Roboto font
-
-## Design Specs
-
-- Dark theme: #000 background, #FFF text
-- Mobile-first responsive design
-- Click exercise name to view progress graphs (TODO)
-- Core foods: max 2 days back-logging allowed
+- FastAPI backend (Railway)
+- PostgreSQL database
 
 ## Development
 
@@ -31,15 +28,58 @@ npm install
 npm run dev
 ```
 
+Dashboard will be at: http://localhost:5173
+
+## API Integration
+
+Dashboard connects to: `https://ttm-metrics-api-production.up.railway.app`
+
+**Endpoints used:**
+- `GET /api/dashboard/{code}/workouts` - Load workout program
+- `GET /api/dashboard/{code}/best-prs` - Load best PRs
+- `GET /api/dashboard/{code}/deload-status` - Load completion counts
+- `POST /api/dashboard/{code}/log-workout` - Submit workout
+- `GET /api/dashboard/{code}/core-foods` - Load core foods history
+
+See `src/api.ts` for implementation.
+
 ## Deployment
 
-Deploy to Vercel or Railway. Set up API integration with TTM FastAPI backend.
+**Live Dashboard**: https://dashboard-production-79f2.up.railway.app
 
-## API Integration (TODO)
+Deployed to Railway with environment variable:
+```
+VITE_API_URL=https://ttm-metrics-api-production.up.railway.app
+```
 
-Connect to `ttm-metrics-api-production.up.railway.app` for:
-- GET /api/workouts/{user_id}
-- GET /api/prs/{user_id}/latest
-- POST /api/prs
-- GET /api/core-foods/{user_id}/weekly
-- POST /api/core-foods
+## Creating Users
+
+Users need a unique access code. On the API side:
+
+```bash
+# 1. Create dashboard member
+python create_dashboard_user.py <user_id> <username>
+
+# 2. Add workout plan
+python add_workout_plan.py <user_id>
+```
+
+Share the dashboard URL and access code with the user.
+
+## Design Specs
+
+- Background: #1a1a1a (dark)
+- Text: #e0e0e0 (light gray)
+- Font: Roboto, sans-serif
+- Spacing: Compact (6px margins, 8px padding)
+- Mobile-first responsive design
+
+## User Flow
+
+1. Enter unique access code
+2. View personalized workout program
+3. Expand workout to log exercises
+4. Enter weight/reps, check core foods
+5. Submit workout
+6. See updated deload counter and PRs
+

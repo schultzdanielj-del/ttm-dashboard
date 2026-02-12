@@ -3,195 +3,237 @@ import './index.css';
 
 // Types
 interface Exercise {
-  id: string;
   name: string;
-  bestPR: {
-    weight: number;
-    reps: number;
-  };
+  best_pr?: string;
+  special_logging?: 'weight_only' | 'reps_as_seconds';
 }
 
 interface Workout {
-  id: string;
-  letter: string;
-  exercises: Exercise[];
-  expanded: boolean;
+  [key: string]: Exercise[];
 }
 
-interface CoreFood {
-  date: string;
-  proteins: number;
-  veggies: number;
+interface DeloadStatus {
+  [key: string]: number;
 }
 
 function App() {
-  const [workouts, setWorkouts] = useState<Workout[]>([]);
-  const [deloadProgress, setDeloadProgress] = useState(0);
-  const [coreFoods, setCoreFoods] = useState<CoreFood[]>([]);
+  const [workouts, setWorkouts] = useState<Workout>({
+    A: [
+      { name: 'Squat', best_pr: '315/5' },
+      { name: 'Bench Press', best_pr: '225/8' },
+      { name: 'Barbell Row', best_pr: '185/10' },
+    ],
+    B: [
+      { name: 'Deadlift', best_pr: '405/3' },
+      { name: 'Overhead Press', best_pr: '135/8' },
+      { name: 'Pull Ups', best_pr: 'BW/12' },
+    ],
+  });
   
-  // Mock data - replace with API calls
-  useEffect(() => {
-    // TODO: Fetch from API
-    setWorkouts([
-      {
-        id: '1',
-        letter: 'A',
-        expanded: false,
-        exercises: [
-          { id: '1', name: 'Squat', bestPR: { weight: 315, reps: 5 } },
-          { id: '2', name: 'Bench Press', bestPR: { weight: 225, reps: 8 } },
-          { id: '3', name: 'Barbell Row', bestPR: { weight: 185, reps: 10 } },
-        ]
-      },
-      {
-        id: '2',
-        letter: 'B',
-        expanded: false,
-        exercises: [
-          { id: '4', name: 'Deadlift', bestPR: { weight: 405, reps: 3 } },
-          { id: '5', name: 'Overhead Press', bestPR: { weight: 135, reps: 8 } },
-          { id: '6', name: 'Pull Ups', bestPR: { weight: 45, reps: 12 } },
-        ]
-      },
-    ]);
+  const [deloadStatus, setDeloadStatus] = useState<DeloadStatus>({
+    A: 4,
+    B: 5,
+  });
+  
+  const [expandedWorkouts, setExpandedWorkouts] = useState<Set<string>>(new Set());
+  const [coreFoods, setCoreFoods] = useState(false);
+  const [inputs, setInputs] = useState<{[key: string]: {weight: string, reps: string}}>({});
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const toggleWorkout = (letter: string) => {
+    const newExpanded = new Set(expandedWorkouts);
+    if (newExpanded.has(letter)) {
+      newExpanded.delete(letter);
+    } else {
+      newExpanded.add(letter);
+    }
+    setExpandedWorkouts(newExpanded);
+  };
+
+  const handleInputChange = (workout: string, exercise: string, type: 'weight' | 'reps', value: string) => {
+    const key = `${workout}:${exercise}`;
+    setInputs(prev => ({
+      ...prev,
+      [key]: {
+        ...prev[key],
+        [type]: value
+      }
+    }));
+  };
+
+  const submitWorkout = () => {
+    // Find which workout has data
+    const workoutsWithData = new Set<string>();
+    Object.keys(inputs).forEach(key => {
+      const [workout] = key.split(':');
+      if (inputs[key].weight || inputs[key].reps) {
+        workoutsWithData.add(workout);
+      }
+    });
+
+    if (workoutsWithData.size === 0) {
+      alert('Please enter at least one exercise');
+      return;
+    }
+    if (workoutsWithData.size > 1) {
+      alert('Please log only one workout at a time');
+      return;
+    }
+
+    // Show success and clear
+    setShowSuccess(true);
+    setInputs({});
+    setCoreFoods(false);
     
-    setDeloadProgress(66); // 4/6 workouts completed
-    
-    setCoreFoods([
-      { date: '2026-02-11', proteins: 4, veggies: 3 },
-      { date: '2026-02-10', proteins: 4, veggies: 3 },
-      { date: '2026-02-09', proteins: 3, veggies: 3 },
-      { date: '2026-02-08', proteins: 4, veggies: 2 },
-      { date: '2026-02-07', proteins: 4, veggies: 3 },
-      { date: '2026-02-06', proteins: 4, veggies: 3 },
-      { date: '2026-02-05', proteins: 4, veggies: 3 },
-    ]);
-  }, []);
-
-  const toggleWorkout = (workoutId: string) => {
-    setWorkouts(workouts.map(w => 
-      w.id === workoutId ? { ...w, expanded: !w.expanded } : w
-    ));
-  };
-
-  const calculateWarmup = (weight: number): number => {
-    return Math.round(weight * 0.5 / 5) * 5;
-  };
-
-  const calculateFeeler = (weight: number): number => {
-    return Math.round(weight * 0.75 / 5) * 5;
-  };
-
-  const handleLog = (exerciseId: string, weight: number, reps: number) => {
-    console.log('Log PR:', { exerciseId, weight, reps });
-    // TODO: API call to log PR
+    setTimeout(() => {
+      setShowSuccess(false);
+    }, 2000);
   };
 
   return (
-    <div className="min-h-screen bg-black text-white font-roboto">
+    <div style={{ background: '#1a1a1a', minHeight: '100vh', color: '#e0e0e0', padding: '6px', fontSize: '13px', lineHeight: '1.2' }}>
       {/* Header */}
-      <div className="p-4 border-b border-gray-800">
-        <h1 className="text-2xl font-bold">Three Target Method</h1>
+      <div style={{ background: '#2a2a2a', padding: '8px', borderRadius: '6px', marginBottom: '6px' }}>
+        <h1 style={{ fontSize: '15px', marginBottom: '2px', fontWeight: 600 }}>Three Target Method</h1>
+        <div style={{ fontSize: '13px', color: '#888' }}>Tap workout to expand</div>
       </div>
 
-      {/* Deload Progress */}
-      <div className="p-4">
-        <div className="mb-2 flex justify-between text-sm">
-          <span>Deload Progress</span>
-          <span>{deloadProgress}%</span>
+      {/* Success Message */}
+      {showSuccess && (
+        <div style={{ background: '#4CAF50', color: 'white', padding: '8px', borderRadius: '6px', marginBottom: '6px', fontSize: '12px' }}>
+          ✅ Workout logged successfully!
         </div>
-        <div className="w-full bg-gray-800 rounded-full h-2">
-          <div 
-            className="bg-orange-500 h-2 rounded-full transition-all duration-300"
-            style={{ width: `${deloadProgress}%` }}
-          />
-        </div>
-      </div>
+      )}
 
       {/* Workouts */}
-      <div className="p-4 space-y-3">
-        {workouts.map(workout => (
-          <div key={workout.id} className="border border-gray-800 rounded">
-            {/* Workout Header */}
-            <button
-              onClick={() => toggleWorkout(workout.id)}
-              className="w-full p-3 flex justify-between items-center hover:bg-gray-900"
-            >
-              <span className="font-bold">Workout {workout.letter}</span>
-              <span className="text-gray-400">{workout.expanded ? '▼' : '▶'}</span>
-            </button>
+      {Object.keys(workouts).map(letter => (
+        <div key={letter} style={{ background: '#2a2a2a', borderRadius: '6px', marginBottom: '4px', overflow: 'hidden' }}>
+          {/* Workout Header */}
+          <div 
+            onClick={() => toggleWorkout(letter)}
+            style={{ 
+              background: '#3a3a3a', 
+              padding: '8px 10px', 
+              cursor: 'pointer', 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center' 
+            }}
+          >
+            <span style={{ fontSize: '14px', fontWeight: 600 }}>Workout {letter}</span>
+            <span style={{ 
+              fontSize: '11px', 
+              color: deloadStatus[letter] >= 6 ? '#ff6b35' : '#4CAF50', 
+              fontWeight: 500 
+            }}>
+              {deloadStatus[letter]}/6 {deloadStatus[letter] >= 6 && '⚠️ DELOAD'}
+            </span>
+          </div>
 
-            {/* Exercises */}
-            {workout.expanded && (
-              <div className="border-t border-gray-800">
-                {workout.exercises.map(exercise => (
-                  <div key={exercise.id} className="p-3 border-b border-gray-800 last:border-b-0">
-                    {/* Exercise Name & Best PR */}
-                    <div className="mb-2">
-                      <div className="font-medium">{exercise.name}</div>
-                      <div className="text-sm text-gray-400">
-                        Best PR: {exercise.bestPR.weight}/{exercise.bestPR.reps}
+          {/* Workout Content */}
+          {expandedWorkouts.has(letter) && (
+            <div style={{ padding: '8px' }}>
+              {workouts[letter].map((exercise, idx) => {
+                const key = `${letter}:${exercise.name}`;
+                return (
+                  <div 
+                    key={idx}
+                    style={{ 
+                      marginBottom: '8px', 
+                      paddingBottom: '8px', 
+                      borderBottom: idx < workouts[letter].length - 1 ? '1px solid #3a3a3a' : 'none' 
+                    }}
+                  >
+                    {/* Exercise Header */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '5px' }}>
+                      <div style={{ fontSize: '13px', fontWeight: 500 }}>{exercise.name}</div>
+                      <div style={{ fontSize: '10px', color: exercise.best_pr ? '#888' : '#666' }}>
+                        {exercise.best_pr ? (
+                          <>PR: <span style={{ color: '#4CAF50', fontWeight: 600 }}>{exercise.best_pr}</span></>
+                        ) : '--'}
                       </div>
                     </div>
 
-                    {/* Warmup & Feeler */}
-                    <div className="grid grid-cols-2 gap-2 mb-2 text-sm">
-                      <div>
-                        <span className="text-gray-400">Warmup: </span>
-                        <span>{calculateWarmup(exercise.bestPR.weight)} lbs</span>
+                    {/* Inputs */}
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <label style={{ fontSize: '11px', color: '#999' }}>Weight:</label>
+                        <input
+                          type="number"
+                          value={inputs[key]?.weight || ''}
+                          onChange={(e) => handleInputChange(letter, exercise.name, 'weight', e.target.value)}
+                          placeholder="lbs"
+                          step="0.5"
+                          style={{
+                            width: '50px',
+                            padding: '6px 4px',
+                            background: '#1a1a1a',
+                            border: '1px solid #444',
+                            borderRadius: '4px',
+                            color: '#e0e0e0',
+                            fontSize: '14px',
+                            textAlign: 'center'
+                          }}
+                        />
                       </div>
-                      <div>
-                        <span className="text-gray-400">Feeler: </span>
-                        <span>{calculateFeeler(exercise.bestPR.weight)} lbs</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <label style={{ fontSize: '11px', color: '#999' }}>Reps:</label>
+                        <input
+                          type="number"
+                          value={inputs[key]?.reps || ''}
+                          onChange={(e) => handleInputChange(letter, exercise.name, 'reps', e.target.value)}
+                          placeholder="reps"
+                          style={{
+                            width: '50px',
+                            padding: '6px 4px',
+                            background: '#1a1a1a',
+                            border: '1px solid #444',
+                            borderRadius: '4px',
+                            color: '#e0e0e0',
+                            fontSize: '14px',
+                            textAlign: 'center'
+                          }}
+                        />
                       </div>
-                    </div>
-
-                    {/* Input Fields */}
-                    <div className="flex gap-2">
-                      <input
-                        type="number"
-                        placeholder="Weight"
-                        className="w-20 px-2 py-1 bg-gray-900 border border-gray-700 rounded text-sm"
-                      />
-                      <input
-                        type="number"
-                        placeholder="Reps"
-                        className="w-16 px-2 py-1 bg-gray-900 border border-gray-700 rounded text-sm"
-                      />
-                      <button
-                        onClick={() => handleLog(exercise.id, 0, 0)}
-                        className="px-4 py-1 bg-orange-500 hover:bg-orange-600 rounded text-sm font-medium"
-                      >
-                        Log
-                      </button>
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      ))}
 
       {/* Core Foods */}
-      <div className="p-4">
-        <h2 className="text-xl font-bold mb-3">Core Foods (Last 7 Days)</h2>
-        <div className="space-y-2">
-          {coreFoods.map(food => (
-            <div key={food.date} className="flex justify-between items-center p-2 bg-gray-900 rounded">
-              <span className="text-sm">{new Date(food.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
-              <div className="flex gap-4 text-sm">
-                <span className={food.proteins >= 4 ? 'text-green-500' : 'text-red-500'}>
-                  P: {food.proteins}/4
-                </span>
-                <span className={food.veggies >= 3 ? 'text-green-500' : 'text-red-500'}>
-                  V: {food.veggies}/3
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
+      <div style={{ background: '#2a2a2a', padding: '8px', borderRadius: '6px', margin: '6px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <input 
+          type="checkbox" 
+          id="core-foods" 
+          checked={coreFoods}
+          onChange={(e) => setCoreFoods(e.target.checked)}
+          style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+        />
+        <label htmlFor="core-foods" style={{ fontSize: '13px', cursor: 'pointer' }}>Ate core foods today</label>
       </div>
+
+      {/* Submit Button */}
+      <button 
+        onClick={submitWorkout}
+        style={{
+          width: '100%',
+          padding: '10px',
+          background: '#4CAF50',
+          color: 'white',
+          border: 'none',
+          borderRadius: '6px',
+          fontSize: '15px',
+          fontWeight: 600,
+          cursor: 'pointer',
+          marginTop: '4px'
+        }}
+      >
+        Log Workout
+      </button>
     </div>
   );
 }

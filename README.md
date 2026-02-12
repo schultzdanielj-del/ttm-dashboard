@@ -4,7 +4,8 @@ Web-based dashboard for Three Target Method fitness coaching. Provides personali
 
 ## Features
 
-- ✅ Unique access code authentication (one code per user)
+- ✅ **Zero-friction access** - Users just save their personalized link
+- ✅ URL-based authentication (no login required)
 - ✅ Personalized workout program display
 - ✅ Best PR display for each exercise
 - ✅ Deload counter (0/6 to 6/6 tracking)
@@ -29,6 +30,15 @@ npm run dev
 ```
 
 Dashboard will be at: http://localhost:5173
+
+## How It Works
+
+Each user gets a unique URL with their access code embedded:
+```
+https://dashboard-production-79f2.up.railway.app/{unique_code}
+```
+
+Users just bookmark/save this link - **no login required**.
 
 ## API Integration
 
@@ -59,12 +69,18 @@ Users need a unique access code. On the API side:
 ```bash
 # 1. Create dashboard member
 python create_dashboard_user.py <user_id> <username>
+# Returns: unique_code (e.g., "abc123XYZ-def456")
 
 # 2. Add workout plan
 python add_workout_plan.py <user_id>
 ```
 
-Share the dashboard URL and access code with the user.
+**Then share the personalized link:**
+```
+https://dashboard-production-79f2.up.railway.app/{unique_code}
+```
+
+**That's it!** User just saves the link - no login, no password, zero friction.
 
 ## Design Specs
 
@@ -76,10 +92,12 @@ Share the dashboard URL and access code with the user.
 
 ## User Flow
 
-1. Enter unique access code
-2. View personalized workout program
-3. Expand workout to log exercises
-4. Enter weight/reps, check core foods
-5. Submit workout
-6. See updated deload counter and PRs
+1. Coach shares personalized link with unique code
+2. User saves/bookmarks link (one-time)
+3. User opens link anytime - dashboard loads instantly
+4. Expand workout to log exercises
+5. Enter weight/reps, check core foods
+6. Submit workout
+7. See updated deload counter and PRs
 
+**Zero friction - just a saved link.**

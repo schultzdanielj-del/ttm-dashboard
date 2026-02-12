@@ -3,12 +3,6 @@ import './index.css';
 import DashboardAPI, { Exercise, Workout, DeloadStatus } from './api';
 
 function App() {
-  // Authentication state
-  const [uniqueCode, setUniqueCode] = useState<string>('');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [authError, setAuthError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  
   // Dashboard state
   const [api, setApi] = useState<DashboardAPI | null>(null);
   const [username, setUsername] = useState<string>('');
@@ -19,42 +13,44 @@ function App() {
   const [inputs, setInputs] = useState<{[key: string]: {weight: string, reps: string}}>({});
   const [showSuccess, setShowSuccess] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [authError, setAuthError] = useState('');
 
-  // Check for saved unique code on mount
+  // Load dashboard on mount using URL path
   useEffect(() => {
-    const savedCode = localStorage.getItem('ttm_unique_code');
-    if (savedCode) {
-      setUniqueCode(savedCode);
-      handleLogin(savedCode);
-    }
-  }, []);
-
-  const handleLogin = async (code: string) => {
-    setIsLoading(true);
-    setAuthError('');
+    const loadDashboard = async () => {
+      // Get unique code from URL path
+      const path = window.location.pathname;
+      const uniqueCode = path.substring(1); // Remove leading slash
+      
+      if (!uniqueCode) {
+        setAuthError('Invalid dashboard link. Please check your link and try again.');
+        setIsLoading(false);
+        return;
+      }
+      
+      try {
+        const apiInstance = new DashboardAPI(uniqueCode);
+        
+        // Test the code by fetching workouts
+        const workoutData = await apiInstance.getWorkouts();
+        
+        // Success! Set up dashboard
+        setApi(apiInstance);
+        setUsername(workoutData.username);
+        
+        // Load initial data
+        await loadDashboardData(apiInstance);
+        
+      } catch (error) {
+        setAuthError('Invalid dashboard link. Please check your link and try again.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
     
-    try {
-      const apiInstance = new DashboardAPI(code);
-      
-      // Test the code by fetching workouts
-      const workoutData = await apiInstance.getWorkouts();
-      
-      // Success! Save code and set up dashboard
-      localStorage.setItem('ttm_unique_code', code);
-      setApi(apiInstance);
-      setUsername(workoutData.username);
-      setIsAuthenticated(true);
-      
-      // Load initial data
-      await loadDashboardData(apiInstance);
-      
-    } catch (error) {
-      setAuthError('Invalid access code. Please check and try again.');
-      localStorage.removeItem('ttm_unique_code');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    loadDashboard();
+  }, []);
 
   const loadDashboardData = async (apiInstance: DashboardAPI) => {
     try {
@@ -80,14 +76,6 @@ function App() {
     } catch (error) {
       console.error('Error loading dashboard data:', error);
     }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('ttm_unique_code');
-    setIsAuthenticated(false);
-    setUniqueCode('');
-    setWorkouts({});
-    setDeloadStatus({});
   };
 
   const toggleWorkout = (letter: string) => {
@@ -184,8 +172,25 @@ function App() {
     }
   };
 
-  // Login screen
-  if (!isAuthenticated) {
+  // Loading screen
+  if (isLoading) {
+    return (
+      <div style={{ 
+        background: '#1a1a1a', 
+        minHeight: '100vh', 
+        color: '#e0e0e0', 
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '20px'
+      }}>
+        <div style={{ fontSize: '18px', color: '#888' }}>Loading dashboard...</div>
+      </div>
+    );
+  }
+
+  // Error screen
+  if (authError) {
     return (
       <div style={{ 
         background: '#1a1a1a', 
@@ -201,63 +206,22 @@ function App() {
           padding: '30px',
           borderRadius: '8px',
           maxWidth: '400px',
-          width: '100%'
+          width: '100%',
+          textAlign: 'center'
         }}>
-          <h1 style={{ fontSize: '24px', marginBottom: '10px', fontWeight: 600 }}>
-            Three Target Method
-          </h1>
-          <p style={{ fontSize: '14px', color: '#888', marginBottom: '20px' }}>
-            Enter your unique access code
+          <div style={{
+            background: '#ff4444',
+            color: 'white',
+            padding: '12px',
+            borderRadius: '6px',
+            fontSize: '14px',
+            marginBottom: '15px'
+          }}>
+            {authError}
+          </div>
+          <p style={{ fontSize: '13px', color: '#888' }}>
+            Please contact your coach for your personal dashboard link.
           </p>
-          
-          <input
-            type="text"
-            value={uniqueCode}
-            onChange={(e) => setUniqueCode(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleLogin(uniqueCode)}
-            placeholder="Access Code"
-            style={{
-              width: '100%',
-              padding: '12px',
-              background: '#1a1a1a',
-              border: '1px solid #444',
-              borderRadius: '6px',
-              color: '#e0e0e0',
-              fontSize: '16px',
-              marginBottom: '15px'
-            }}
-          />
-          
-          {authError && (
-            <div style={{
-              background: '#ff4444',
-              color: 'white',
-              padding: '10px',
-              borderRadius: '6px',
-              fontSize: '13px',
-              marginBottom: '15px'
-            }}>
-              {authError}
-            </div>
-          )}
-          
-          <button
-            onClick={() => handleLogin(uniqueCode)}
-            disabled={isLoading || !uniqueCode}
-            style={{
-              width: '100%',
-              padding: '12px',
-              background: uniqueCode && !isLoading ? '#4CAF50' : '#666',
-              color: 'white',
-              border: 'none',
-              borderRadius: '6px',
-              fontSize: '16px',
-              fontWeight: 600,
-              cursor: uniqueCode && !isLoading ? 'pointer' : 'not-allowed'
-            }}
-          >
-            {isLoading ? 'Loading...' : 'Access Dashboard'}
-          </button>
         </div>
       </div>
     );
@@ -273,20 +237,6 @@ function App() {
             <h1 style={{ fontSize: '15px', marginBottom: '2px', fontWeight: 600 }}>Three Target Method</h1>
             <div style={{ fontSize: '11px', color: '#888' }}>{username}</div>
           </div>
-          <button
-            onClick={handleLogout}
-            style={{
-              padding: '4px 8px',
-              background: '#3a3a3a',
-              color: '#888',
-              border: 'none',
-              borderRadius: '4px',
-              fontSize: '11px',
-              cursor: 'pointer'
-            }}
-          >
-            Logout
-          </button>
         </div>
         <div style={{ fontSize: '13px', color: '#888', marginTop: '4px' }}>Tap workout to expand</div>
       </div>

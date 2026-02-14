@@ -1,0 +1,463 @@
+================================================================================
+DAN (Coach) — RAW vs NORMALIZED COMPARISON
+user_id: 718992882182258769 | username: dan_schultz
+================================================================================
+
+--- MSG 1 | 2026-01-11 | msg_id: 1459762830009172176 ---
+RAW: barbell hip thrust 225/14
+  → #1  hip thrust | 225/14
+
+
+--- MSG 2 | 2026-01-11 | msg_id: 1459762940654784642 ---
+RAW: db sissy squat 30/15
+  → #2  dumbbell sissy squat | 30/15
+
+
+--- MSG 3 | 2026-01-11 | msg_id: 1459762979892494378 ---
+RAW: glute ham raise 25/11
+  → #3  glute ham raise | 25/11
+
+
+--- MSG 4 | 2026-01-11 | msg_id: 1459763046271422709 ---
+RAW: front loaded barbell reverse lunge 105/16
+  → #4  front loaded barbell reverse lunge | 105/16
+
+
+--- MSG 5 | 2026-01-11 | msg_id: 1459973648910913558 ---
+RAW: Roman Chair Situp 15/22
+  → #5  roman chair situp | 15/22
+
+
+--- MSG 6 | 2026-01-11 | msg_id: 1459973690589577514 ---
+RAW: Rotational Neck Bridges 15/16
+  → #6  rotational neck bridge | 15/16
+
+
+--- MSG 7 | 2026-01-11 | msg_id: 1459973749549043742 ---
+RAW: Single Leg Calf Raise BW/14
+  → #7  single leg calf raise | BW/14
+
+
+--- MSG 8 | 2026-01-11 | msg_id: 1459973814766145628 ---
+RAW: Seated Single leg calf raise 135/15
+  → #8  seated single leg calf raise | 135/15
+
+
+--- MSG 9 | 2026-01-11 | msg_id: 1459973888426508409 ---
+RAW: standing dip belt calf raise 45/25
+  → #9  standing dip belt calf raise | 45/25
+
+
+--- MSG 10 | 2026-01-11 | msg_id: 1459975252758102036 ---
+RAW: Incline 1 arm DB bench 65/19
+  → #10 incline single arm dumbbell bench press | 65/19
+
+
+--- MSG 11 | 2026-01-11 | msg_id: 1459975519528423527 ---
+RAW: alternating standing db hammer curls 55x11
+  → #11 alternating standing dumbbell hammer curl | 55/11
+
+
+--- MSG 12 | 2026-01-11 | msg_id: 1459975571743182950 ---
+RAW: seated uh db curls 40 for 17
+  → #12 seated underhand dumbbell curl | 40/17
+
+
+--- MSG 13 | 2026-01-11 | msg_id: 1459975635781943579 ---
+RAW: standing uh grip db curls 35/14
+  → #13 standing underhand dumbbell curl | 35/14
+
+
+--- MSG 14 | 2026-01-11 | msg_id: 1459975672519852255 ---
+RAW: reverse grip ez bar curl 65/18
+  → #14 reverse grip ez bar curl | 65/18
+
+
+--- MSG 15 | 2026-01-11 | msg_id: 1459975737280036996 ---
+RAW: wide grip pullups bw/15
+  → #15 wide grip pullup | BW/15
+
+
+--- MSG 16 | 2026-01-11 | msg_id: 1459976183893721473 ---
+RAW: pulldowns 90/20
+  → #16 lat pulldown | 90/20
+
+
+--- MSG 17 | 2026-01-11 | msg_id: 1459976249769332832 ---
+RAW: chest supported db rows 70/18
+  → #17 chest supported dumbbell row | 70/18
+
+
+--- MSG 18 | 2026-01-11 | msg_id: 1459977226341716182 ---
+RAW: 1 arm db rows 75/19
+  → #18 single arm dumbbell row | 75/19
+
+
+--- MSG 19 | 2026-01-11 | msg_id: 1459977587295256596 ---
+RAW: head supported rear delt fly 35/4
+  → SKIP (typo, corrected 28 seconds later in MSG 20)
+
+
+--- MSG 20 | 2026-01-11 | msg_id: 1459977615006761090 ---
+RAW: head supported rear delt fly 35/14
+  → #19 head supported rear delt fly | 35/14
+
+
+--- MSG 21 | 2026-01-11 | msg_id: 1459977949582463026 ---
+RAW: high incline db press 80/17
+  → #20 high incline dumbbell bench press | 80/17
+
+
+--- MSG 22 | 2026-01-11 | msg_id: 1459977985250693278 ---
+RAW: seated lateral raise 35/12
+  → #21 seated lateral raise | 35/12
+
+
+--- MSG 23 | 2026-01-11 | msg_id: 1459978177194496225 ---
+RAW: standing lateral raise 30/18
+  → #22 standing lateral raise | 30/18
+
+
+--- MSG 24 | 2026-01-11 | msg_id: 1459978373517414472 ---
+RAW: db triceps extension 50/14
+  → #23 dumbbell tricep extension | 50/14
+
+
+--- MSG 25 | 2026-01-11 | msg_id: 1459978754351960268 ---
+RAW: incline ex bar triceps extensions 90/16
+  → #24 incline ez bar tricep extension | 90/16
+
+
+--- MSG 26 | 2026-01-11 | msg_id: 1459978779303608611 ---
+RAW: weighte dips 55/15
+  → #25 weighted dip | 55/15
+
+
+--- MSG 27-46 ---
+  → SKIP (commentary, coaching, core foods — no PRs)
+
+
+--- MSG 47 | 2026-01-22 | msg_id: 1463937555408883733 ---
+RAW: Single arm incline db bench 70/20
+  → #26 single arm incline dumbbell bench press | 70/20
+
+
+--- MSG 48 | 2026-01-22 | msg_id: 1463939039810814025 ---
+RAW: Low incline single arm db bench 70/16
+  → #27 low incline single arm dumbbell bench press | 70/16
+
+
+--- MSG 49 | 2026-01-22 | msg_id: 1463941348817244242 ---
+RAW: alternating standing db hammer curls 55x13
+  → #28 alternating standing dumbbell hammer curl | 55/13
+
+
+--- MSG 50 | 2026-01-22 | msg_id: 1463943105475772561 ---
+RAW: seated uh db curls 40x15 - not a pr
+  → #29 seated underhand dumbbell curl | 40/15
+
+
+--- MSG 51 | 2026-01-22 | msg_id: 1463944728432087162 ---
+RAW: standing uh grip db curls 35/17
+  → #30 standing underhand dumbbell curl | 35/17
+
+
+--- MSG 52 | 2026-01-22 | msg_id: 1463947071974539439 ---
+RAW: reverse grip ez bar curl 65/21
+  → #31 reverse grip ez bar curl | 65/21
+
+
+--- MSG 53-54 ---
+  → SKIP (coaching, core foods)
+
+
+--- MSG 55 | 2026-01-23 | msg_id: 1464364602727862282 ---
+RAW: wide grip pullups bw/18
+  → #32 wide grip pullup | BW/18
+
+
+--- MSG 56 | 2026-01-23 | msg_id: 1464365805675352218 ---
+RAW: chinups bw/14
+  → #33 chinup | BW/14
+
+
+--- MSG 57 | 2026-01-23 | msg_id: 1464367401444577381 ---
+RAW: pulldowns 90/22
+  → #34 lat pulldown | 90/22
+
+
+--- MSG 58 | 2026-01-23 | msg_id: 1464369793925906647 ---
+RAW: chest supported db row 70/16
+  → #35 chest supported dumbbell row | 70/16
+
+
+--- MSG 59 | 2026-01-23 | msg_id: 1464371218323869930 ---
+RAW: 1 arm db rows 80/14
+  → #36 single arm dumbbell row | 80/14
+
+
+--- MSG 60 | 2026-01-23 | msg_id: 1464373438838865980 ---
+RAW: head supported rear delt fly 35/12
+  → #37 head supported rear delt fly | 35/12
+
+
+--- MSG 61-70 ---
+  → SKIP (core foods, coaching, commentary)
+
+
+--- MSG 71 | 2026-01-26 | msg_id: 1465144685856030956 ---
+RAW: High incline db press 70/15
+  → #38 high incline dumbbell bench press | 70/15
+
+
+--- MSG 72 | 2026-01-26 | msg_id: 1465144785399582846 ---
+RAW: Seated lateral raises 35/10
+  → #39 seated lateral raise | 35/10
+
+
+--- MSG 73 | 2026-01-26 | msg_id: 1465144815393181749 ---
+RAW: standing lateral raises 30/18
+  → #40 standing lateral raise | 30/18
+
+
+--- MSG 74 | 2026-01-26 | msg_id: 1465145145929240639 ---
+RAW: db triceps extension 50/14
+RAW: incline ex bar triceps extensions 90/15
+RAW: weighted dips 55/13
+  → #41 dumbbell tricep extension | 50/14
+  → #42 incline ez bar tricep extension | 90/15
+  → #43 weighted dip | 55/13
+
+
+--- MSG 75-80 ---
+  → SKIP (coaching, commentary)
+
+
+--- MSG 81 | 2026-01-27 | msg_id: 1465831314677563565 ---
+RAW: front loaded barbell reverse lunge 105/17
+  → #44 front loaded barbell reverse lunge | 105/17
+
+
+--- MSG 82 | 2026-01-27 | msg_id: 1465832219192066061 ---
+RAW: glute ham raise 25/13
+  → #45 glute ham raise | 25/13
+
+
+--- MSG 83 | 2026-01-27 | msg_id: 1465834284265898308 ---
+RAW: db sissy squat 30/8
+  → #46 dumbbell sissy squat | 30/8
+
+
+--- MSG 84 ---
+  → SKIP (commentary)
+
+
+--- MSG 85 | 2026-01-27 | msg_id: 1465838632471629971 ---
+RAW: barbell hip thrust 225/15
+  → #47 hip thrust | 225/15
+
+
+--- MSG 86 | 2026-01-27 | msg_id: 1465840909332779038 ---
+RAW: 4 set reverse hypers 50/20
+  → #48 reverse hyper | 50/20
+
+
+--- MSG 87-89 ---
+  → SKIP (core foods, commentary)
+
+
+--- MSG 88 | 2026-01-29 | msg_id: 1466490689402437858 ---
+RAW: weighted side planks 55/65
+  → #49 weighted side plank | 55/65
+
+
+--- MSG 90 | 2026-01-29 | msg_id: 1466493495056404563 ---
+RAW: roman chair situp 20/17
+  → #50 roman chair situp | 20/17
+
+
+--- MSG 91 | 2026-01-29 | msg_id: 1466496001601966262 ---
+RAW: Rotational Neck Bridges 15/18
+  → #51 rotational neck bridge | 15/18
+
+
+--- MSG 92 | 2026-01-29 | msg_id: 1466499965491871796 ---
+RAW: Single leg calf raise bw/16
+RAW: seated single leg calf raise 135/17
+  → #52 single leg calf raise | BW/16
+  → #53 seated single leg calf raise | 135/17
+
+
+--- MSG 93 | 2026-01-29 | msg_id: 1466501052173123709 ---
+RAW: standing dip belt calf raise 45/30
+  → #54 standing dip belt calf raise | 45/30
+
+
+--- MSG 94-95 ---
+  → SKIP (core foods)
+
+
+--- MSG 96 | 2026-01-31 | msg_id: 1467220734651662535 ---
+RAW: 1 arm db floor press 75/25
+RAW: 1 arm db floor press 80/14
+RAW: alternating standing db hammer curls 55x13
+RAW: seated uh db curls 40 for 16
+RAW: standing uh grip db curls 35/21
+RAW: reverse grip ez bar curl 70/15
+  → #55 single arm dumbbell floor press | 75/25
+  → #56 single arm dumbbell floor press | 80/14
+  → #57 alternating standing dumbbell hammer curl | 55/13
+  → #58 seated underhand dumbbell curl | 40/16
+  → #59 standing underhand dumbbell curl | 35/21
+  → #60 reverse grip ez bar curl | 70/15
+
+
+--- MSG 97-103 ---
+  → SKIP (core foods, giphy, commentary, coaching)
+
+
+--- MSG 104 | 2026-02-03 | msg_id: 1468318566699892848 ---
+RAW: db front raises 30/23
+RAW: db seated lateral raises 30/18
+RAW: db standing lateral raises 30/18
+RAW: db triceps extensions 50/15
+RAW: incline ez bar skullcrushers 90/15
+RAW: pushdowns 50x22
+  → #61 dumbbell front raise | 30/23
+  → #62 seated lateral raise | 30/18
+  → #63 standing lateral raise | 30/18
+  → #64 dumbbell tricep extension | 50/15
+  → #65 incline ez bar tricep extension | 90/15
+  → #66 tricep pushdown | 50/22
+
+
+--- MSG 105-117 ---
+  → SKIP (core foods, coaching, giphy, commentary)
+
+
+--- MSG 118 | 2026-02-06 | msg_id: 1469368099558920437 ---
+RAW: front loaded barbell reverse lunge 105/18
+RAW: glute ham raise 25/15
+RAW: glute ham raise bw/21
+RAW: heels elevated front squat 65/23
+  → #67 front loaded barbell reverse lunge | 105/18
+  → #68 glute ham raise | 25/15
+  → #69 glute ham raise | BW/21
+  → #70 heels elevated front squat | 65/23
+
+
+--- MSG 119 | 2026-02-06 | msg_id: 1469411275594403924 ---
+RAW: weighted side planks 55/70
+  → #71 weighted side plank | 55/70
+
+
+--- MSG 120 | 2026-02-06 | msg_id: 1469411304656732211 ---
+RAW: roman chair situps 20/20
+  → #72 roman chair situp | 20/20
+
+
+--- MSG 121 | 2026-02-06 | msg_id: 1469411331231973584 ---
+RAW: rotational neck bridges 15/20
+  → #73 rotational neck bridge | 15/20
+
+
+--- MSG 122 | 2026-02-06 | msg_id: 1469411547880100016 ---
+RAW: single leg calf raises bw/18
+RAW: seated single leg calf raises 135/20
+RAW: standing dip belt calf raise 55/30
+  → #74 single leg calf raise | BW/18
+  → #75 seated single leg calf raise | 135/20
+  → #76 standing dip belt calf raise | 55/30
+
+
+--- MSG 123-126 ---
+  → SKIP (core foods, commentary, giphy)
+
+
+--- MSG 127 | 2026-02-09 | msg_id: 1470409376035508234 ---
+RAW: single arm db floor press 85/20
+RAW: single arm db floor press 75/17
+  → #77 single arm dumbbell floor press | 85/20
+  → #78 single arm dumbbell floor press | 75/17
+
+
+--- MSG 128 | 2026-02-09 | msg_id: 1470409636761960623 ---
+RAW: alternating db hammer curls 55/14
+RAW: seated underhand grip db curls 40/18
+RAW: standing underhand grip db curls 35/19
+RAW: reverse grip ez bar curls 70/17
+  → #79 alternating standing dumbbell hammer curl | 55/14
+  → #80 seated underhand dumbbell curl | 40/18
+  → #81 standing underhand dumbbell curl | 35/19
+  → #82 reverse grip ez bar curl | 70/17
+
+
+--- MSG 129-138 ---
+  → SKIP (commentary, coaching, giphy, core foods)
+
+
+--- MSG 139 | 2026-02-10 | msg_id: 1470844768413159494 ---
+RAW: Wide grip pullups BW/19
+  → #83 wide grip pullup | BW/19
+
+
+--- MSG 140 | 2026-02-10 | msg_id: 1470844799413125204 ---
+RAW: chinups bw/14
+  → #84 chinup | BW/14
+
+
+--- MSG 141 | 2026-02-10 | msg_id: 1470844825451626679 ---
+RAW: pulldowns 90/22
+  → #85 lat pulldown | 90/22
+
+
+--- MSG 142 | 2026-02-10 | msg_id: 1470844863221076041 ---
+RAW: chest supported db rows 70/18
+  → #86 chest supported dumbbell row | 70/18
+
+
+--- MSG 143 | 2026-02-10 | msg_id: 1470844897241206827 ---
+RAW: single arm db rows 80/18
+  → #87 single arm dumbbell row | 80/18
+
+
+--- MSG 144 | 2026-02-10 | msg_id: 1470844997367759157 ---
+RAW: head supported rear delt flys 35/13
+  → #88 head supported rear delt fly | 35/13
+
+
+--- MSG 145-149 ---
+  → SKIP (commentary, coaching, core foods)
+
+
+--- MSG 150 | 2026-02-12 | msg_id: 1471565172060717159 ---
+RAW: DB front raises 35/20
+RAW: Seated db lateral raises 35/13
+RAW: standing db lateral raises 30/18
+RAW: lying db triceps extensions 50/16
+RAW: incline ez bar triceps extensions 90/18
+  → #89 dumbbell front raise | 35/20
+  → #90 seated lateral raise | 35/13
+  → #91 standing lateral raise | 30/18
+  → #92 dumbbell tricep extension | 50/16
+  → #93 incline ez bar tricep extension | 90/18
+
+
+--- MSG 151 | 2026-02-12 | msg_id: 1471566264441897195 ---
+RAW: straight bar pushdowns 50/25
+  → #94 tricep pushdown | 50/25
+
+
+--- MSG 152-155 ---
+  → SKIP (commentary, coaching, giphy, core foods)
+
+
+================================================================================
+SUMMARY: 94 PRs from 155 messages
+================================================================================
+
+All decisions resolved. MSG 19 skipped (typo). MSG 10/47 same exercise.
+MSG 128 normalized to match "alternating standing dumbbell hammer curl".
+MSG 86 "4 set" prefix dropped.
+
+================================================================================

@@ -1,0 +1,335 @@
+================================================================================
+JOHN (simplyhabby) — RAW vs NORMALIZED COMPARISON (REVISED)
+user_id: 607043556162666514 | username: john
+================================================================================
+
+--- MSG 1 | 2026-01-16 | msg_id: 1461837940782268517 ---
+RAW: January 5th. Single Arm DB bench press 22/35lbs High incline DB press 15/70 lbs ATG squats 5x2 (BW) sissy squats 11 (BW).
+  → #1  single arm dumbbell bench press | 35/22
+  → #2  high incline dumbbell bench press | 70/15
+  → #3  atg split squat | BW/5
+  → #4  sissy squat | BW/11
+
+
+--- MSG 2 | 2026-01-16 | msg_id: 1461838634721480714 ---
+RAW: Jan 6. Chin-ups no bands 6 (golf elbow influenced this), chest supported TRX rows 10x legs at 90 and under anchor, head supported delt flys 18/40. Swiss ball leg curls 15. Barbell hip thrust (2 35lbs dumbbells) 16/70. goblet squats 21/35
+  → #5  chinup | BW/6
+  → #6  trx row | BW/10
+  → #7  head supported rear delt fly | 40/18
+  → #8  stability ball leg curl | BW/15
+  → #9  hip thrust | 70/16
+  → #10 goblet squat | 35/21
+
+
+--- MSG 3 | 2026-01-16 | msg_id: 1461839925388382412 ---
+RAW: Jan 12. (On the road for work) Lateral raises (front raises) 13/70. db tricep extensions (used rope) 8/70. hammer curls (used rope) 12/80. Weighted side planks (medicine ball) 40 secs/20. Ab wheel rotations (reclined bench sit-ups 10/20lbs, land mines (pallof presses) 10/70 per side. The above was modified to accommodate a pulley style gym.
+  → #11 side plank | 20/40
+  → SKIP (all other exercises are substitutions on road equipment)
+
+
+--- MSG 4 | 2026-01-16 | msg_id: 1461840622595080307 ---
+RAW: Jan 15. (Still on the road and using pulley gym) single arm DB press 12/90, high incline DB press 12/180 (bench press). ATG 7x2. Heels elevated goblet squats 22/20. Sissy squats 12
+  → #12 atg split squat | BW/7
+  → #13 goblet squat | 20/22
+  → #14 sissy squat | BW/12
+  → SKIP (single arm DB press and high incline — cable/machine, not DB)
+
+
+--- MSG 5 | 2026-01-16 | msg_id: 1461840919815913706 ---
+RAW: Accomplished all core foods and also incorporated a 6km run on Tuesday along with a boxing style workout on Thursday Sparring on Sat. Happy to be home after a very hectic week.
+  → SKIP (core foods + commentary)
+
+
+--- MSG 6 | 2026-01-16 | msg_id: 1461841827673149481 ---
+RAW: Started at 243lbs on Jan 1 and now 236. Legs are feeling it quite a bit. Goblet squats took a step back but my angle at home was much more shallow than I used at work.
+  → SKIP (commentary)
+
+
+--- MSG 7 | 2026-01-20 | msg_id: 1463209709896077415 ---
+RAW: Chin-ups 7/BW
+  → #15 chinup | BW/7
+
+
+--- MSG 8 | 2026-01-20 | msg_id: 1463211243795124421 ---
+RAW: TRX DB rows 12
+  → #16 trx row | BW/12
+
+
+--- MSG 9 | 2026-01-20 | msg_id: 1463212709540532337 ---
+RAW: HS rear delt fly 20/40
+  → #17 head supported rear delt fly | 40/20
+
+
+--- MSG 10 | 2026-01-20 | msg_id: 1463214398549262346 ---
+RAW: Swiss ball leg curls 20
+  → #18 stability ball leg curl | BW/20
+
+
+--- MSG 11 | 2026-01-20 | msg_id: 1463216451883241618 ---
+RAW: Hip thrust 20/70
+  → #19 hip thrust | 70/20
+
+
+--- MSG 12 | 2026-01-20 | msg_id: 1463216506698731615 ---
+RAW: Ate core foods yesterday
+  → SKIP (core foods)
+
+
+--- MSG 13 | 2026-01-21 | msg_id: 1463520074785624217 ---
+RAW: <@718992882182258769> , elbow was screaming on the chin-ups but otherwise tolerable. Voltaren woks.
+  → SKIP (commentary)
+
+
+--- MSG 14 | 2026-01-21 | msg_id: 1463568978302599346 ---
+RAW: Just chin-ups
+  → SKIP (commentary)
+
+
+--- MSG 15 | 2026-01-21 | msg_id: 1463573817514524835 ---
+RAW: Lateral raises 14/40
+  → #20 lateral raise | 40/14
+
+
+--- MSG 16 | 2026-01-21 | msg_id: 1463575357012836590 ---
+RAW: DB Tricep Extensions 4/40
+  → SKIP (unclear data, skipping)
+
+
+--- MSG 17 | 2026-01-21 | msg_id: 1463576864760008910 ---
+RAW: Hammer curls 11/70
+  → #21 dumbbell hammer curl | 70/11
+
+
+--- MSG 18 | 2026-01-21 | msg_id: 1463578483631460533 ---
+RAW: Side plank 40/25
+  → #22 side plank | 25/40
+
+
+--- MSG 19 | 2026-01-21 | msg_id: 1463579939902062662 ---
+RAW: Ab-wheel rollouts BW/10
+  → #23 ab rollout | BW/10
+
+
+--- MSG 20 | 2026-01-21 | msg_id: 1463582063499153519 ---
+RAW: DB landmines 21/25
+  → #24 landmine | 25/21
+
+
+--- MSG 21 | 2026-01-26 | msg_id: 1465395171830141091 ---
+RAW: Single arm DB press 14/50lbs
+  → #25 single arm dumbbell bench press | 50/14
+
+
+--- MSG 22 | 2026-01-26 | msg_id: 1465396753913217311 ---
+RAW: High incline DB press 11/100
+  → #26 high incline dumbbell bench press | 100/11
+
+
+--- MSG 23 | 2026-01-26 | msg_id: 1465398448038740021 ---
+RAW: ATG squats 9/BW
+  → #27 atg split squat | BW/9
+
+
+--- MSG 24 | 2026-01-26 | msg_id: 1465399884017307831 ---
+RAW: Heels elevated goblet squats 14/50
+  → #28 heels elevated goblet squat | 50/14
+
+
+--- MSG 25 | 2026-01-26 | msg_id: 1465401045474607381 ---
+RAW: Sissy squats 13/bw
+  → #29 sissy squat | BW/13
+
+
+--- MSG 26 | 2026-01-26 | msg_id: 1465401612339253550 ---
+RAW: Core foods hit
+  → SKIP (core foods)
+
+
+--- MSG 27 | 2026-01-27 | msg_id: 1465748490255863952 ---
+RAW: Chin-ups BW/8
+  → #30 chinup | BW/8
+
+
+--- MSG 28 | 2026-01-27 | msg_id: 1465749940713160746 ---
+RAW: TRX Rows BW/13
+  → #31 trx row | BW/13
+
+
+--- MSG 29 | 2026-01-27 | msg_id: 1465751458350895108 ---
+RAW: Head supported rear delt fly 50/11
+  → #32 head supported rear delt fly | 50/11
+
+
+--- MSG 30 | 2026-01-27 | msg_id: 1465753295372030246 ---
+RAW: Swiss ball leg curls BW/23
+  → #33 stability ball leg curl | BW/23
+
+
+--- MSG 31 | 2026-01-27 | msg_id: 1465755614146724013 ---
+RAW: Barbell hip thrust 100/15
+  → #34 hip thrust | 100/15
+
+
+--- MSG 32 | 2026-01-27 | msg_id: 1465782453703807139 ---
+RAW: lol. Just bought the 50s. I'll see if I can do these at the gym after a session.
+  → SKIP (commentary)
+
+
+--- MSG 33 | 2026-01-27 | msg_id: 1465782552265490443 ---
+RAW: At core foods
+  → SKIP (core foods)
+
+
+--- MSG 34 | 2026-01-28 | msg_id: 1466147594345386191 ---
+RAW: Are core foods
+  → SKIP (core foods)
+
+
+--- MSG 35 | 2026-02-03 | msg_id: 1468277879216541789 ---
+RAW: Lateral Raises 40/15
+  → #35 lateral raise | 40/15
+
+
+--- MSG 36 | 2026-02-03 | msg_id: 1468279255468085361 ---
+RAW: DB Tricep Extensions 50/11
+  → #36 dumbbell tricep extension | 50/11
+
+
+--- MSG 37 | 2026-02-03 | msg_id: 1468280467106299916 ---
+RAW: Hammer curls 70/13
+  → #37 dumbbell hammer curl | 70/13
+
+
+--- MSG 38 | 2026-02-03 | msg_id: 1468281841919332443 ---
+RAW: Weighted side planks 35/40
+  → #38 weighted side plank | 35/40
+
+
+--- MSG 39 | 2026-02-03 | msg_id: 1468282975983636634 ---
+RAW: Ab wheel rotations bw/12
+  → #39 ab rollout | BW/12
+
+
+--- MSG 40 | 2026-02-03 | msg_id: 1468284482015596762 ---
+RAW: DB landmine rotations per side 35/12
+  → #40 landmine | 35/12
+
+
+--- MSG 41 | 2026-02-03 | msg_id: 1468284563972427891 ---
+RAW: Ate core foods today (always eat core foods)
+  → SKIP (core foods)
+
+
+--- MSG 42 | 2026-02-04 | msg_id: 1468662626266517514 ---
+RAW: Single arm DB bench press 50/16
+  → #41 single arm dumbbell bench press | 50/16
+
+
+--- MSG 43 | 2026-02-04 | msg_id: 1468664067647344761 ---
+RAW: High incline DB press 100/12
+  → #42 high incline dumbbell bench press | 100/12
+
+
+--- MSG 44 | 2026-02-04 | msg_id: 1468665283496513589 ---
+RAW: ATG split squats x2  BW/10
+  → #43 atg split squat | BW/10
+
+
+--- MSG 45 | 2026-02-04 | msg_id: 1468666683911573577 ---
+RAW: Heels elevated goblet squats 50/16
+  → #44 heels elevated goblet squat | 50/16
+
+
+--- MSG 46 | 2026-02-04 | msg_id: 1468666798806274181 ---
+RAW: About 80% of where I would like
+  → SKIP (commentary)
+
+
+--- MSG 47 | 2026-02-04 | msg_id: 1468667817091141682 ---
+RAW: Sissy squats 14
+  → #45 sissy squat | BW/14
+
+
+--- MSG 48 | 2026-02-04 | msg_id: 1468667966458691687 ---
+RAW: Nice motivation. Love it. I'm going to use this
+  → SKIP (commentary)
+
+
+--- MSG 49 | 2026-02-04 | msg_id: 1468668548489543885 ---
+RAW: Knees are great. Admitted I wasn't a fan of this exercise at the beginning but it feels like my knees are being bulletproofed. I am quite enjoying them now
+  → SKIP (commentary)
+
+
+--- MSG 50 | 2026-02-09 | msg_id: 1470466605786861739 ---
+RAW: Chin-ups BW/9
+  → #46 chinup | BW/9
+
+
+--- MSG 51 | 2026-02-09 | msg_id: 1470468227128754380 ---
+RAW: TRX rows bw/14
+  → #47 trx row | BW/14
+
+
+--- MSG 52 | 2026-02-09 | msg_id: 1470469601979531357 ---
+RAW: Head supported rear delt fly 50/13
+  → #48 head supported rear delt fly | 50/13
+
+
+--- MSG 53 | 2026-02-09 | msg_id: 1470470815379099729 ---
+RAW: Swiss ball leg curls BW/28
+  → #49 stability ball leg curl | BW/28
+
+
+--- MSG 54 | 2026-02-09 | msg_id: 1470472791944990781 ---
+RAW: Dumbbell hip thrust 100/20
+  → #50 hip thrust | 100/20
+
+
+--- MSG 55 | 2026-02-09 | msg_id: 1470473638095618262 ---
+RAW: Core foods eaten
+  → SKIP (core foods)
+
+
+--- MSG 56 | 2026-02-10 | msg_id: 1470832685906923658 ---
+RAW: Lateral raises 50/10
+  → #51 lateral raise | 50/10
+
+
+--- MSG 57 | 2026-02-10 | msg_id: 1470832799803113725 ---
+RAW: Needed to go to 50 as my 20s were being hogged by my wife
+  → SKIP (commentary)
+
+
+--- MSG 58 | 2026-02-10 | msg_id: 1470834148322185420 ---
+RAW: DB Tricep extensions 50/13
+  → #52 dumbbell tricep extension | 50/13
+
+
+--- MSG 59 | 2026-02-10 | msg_id: 1470835586372735177 ---
+RAW: Hammer curls 70/16
+  → #53 dumbbell hammer curl | 70/16
+
+
+--- MSG 60 | 2026-02-10 | msg_id: 1470837291479208089 ---
+RAW: Weighted side planks 35/50
+  → #54 weighted side plank | 35/50
+
+
+--- MSG 61 | 2026-02-10 | msg_id: 1470838487073816779 ---
+RAW: Ab wheel rotations bw/14
+  → #55 ab rollout | BW/14
+
+
+--- MSG 62 | 2026-02-10 | msg_id: 1470839751358812314 ---
+RAW: DM land mines  35/19
+  → #56 landmine | 35/19
+
+
+--- MSG 63 | 2026-02-10 | msg_id: 1470839800910188676 ---
+RAW: Core foods eaten
+  → SKIP (core foods)
+
+
+================================================================================
+SUMMARY: 56 PRs from 63 messages
+================================================================================

@@ -9,6 +9,7 @@ Claude: Read this FIRST at the start of every conversation. Pull from `schultzda
 3. **One thing at a time.** Don't chain multiple fixes together. Fix one thing, confirm it works, then move on.
 4. **Show, don't marathon.** After investigating, summarize what you found and what you'd do. Stop. Wait for Dan's go-ahead.
 5. **If uncertain, ask.** Don't guess at intent. If the problem could be data vs code vs config, say so and ask which to pursue.
+6. **Always explain approach before doing it.** Dan says "go" before execution. Saves tokens and avoids brute forcing.
 
 ## REPOSITORIES (all under github.com/schultzdanielj-del)
 
@@ -42,14 +43,30 @@ Claude: Read this FIRST at the start of every conversation. Pull from `schultzda
 ## DATABASE TABLES (PostgreSQL on Railway)
 PRs, Workouts, WorkoutCompletions, DashboardMembers, CoreFoodsCheckins, UserNotes, ExerciseSwaps, WorkoutSessions, UserXP, WeeklyLogs
 
-## CURRENT DATA STATUS — CLEAN AS OF FEB 14
-- **267 total PRs** in database
-- **203 scraped from Discord** (clean, normalized via `scrape_and_reload.py` normalization function)
-- **64 manually-entered PRs** preserved (Feras: 41, Sonny: 23) — these were NOT from Discord and use Title Case names
-- **119 unique exercise names** across all users
-- **User breakdown (Discord-scraped)**: Dan Schultz: 92, Travis: 45, John: 37, Dan I: 29
-- **Manual-entry user IDs** (protected from rescrape wipe): `919580721922859008` (Feras), `ND_sonny_a1b2c3d4e5f6` (Sonny)
-- Feras/Sonny exercise names are still in original Title Case format — could be normalized separately if needed
+## CURRENT DATA STATUS — MANUAL PR AUDIT IN PROGRESS
+
+### What happened
+The automated scraper was missing PRs due to format variations (e.g. "40 for 17", "50lbs x 13", "Bodyweight x 7", reversed reps/weight). Instead of fixing the parser for edge cases that won't recur once members use the dashboard, we're doing a manual audit: extract each member's Discord posts, normalize by hand with Dan's approval, then replace their DB entries with the approved clean set using original Discord timestamps.
+
+### Audit status
+- **Warhound (Travis)**: ✅ APPROVED — 76 PRs. File: `warhound_raw_vs_normalized.txt`
+- **Zioz (Dan I)**: ✅ APPROVED — 29 PRs. File: `zioz_raw_vs_normalized.txt`
+- **John (simplyhabby)**: ✅ APPROVED — 56 PRs. File: `john_raw_vs_normalized.txt`
+- **Dan (coach)**: ❌ NOT STARTED — next session
+
+### What's left after audit completes
+1. Wipe each user's existing PRs from DB
+2. Insert approved PR sets with correct Discord timestamps (currently all timestamps show rescrape time, not original post time)
+3. Fix normalization: ATG split squat must NOT map to bulgarian/rear foot elevated split squat — it's a distinct exercise
+4. Verify dashboards show correct data post-insert
+
+### Key findings from audit
+- Scraper missed ~70+ Warhound PRs (nearly all of his) due to "Nlbs x N" format
+- Scraper missed Dan's "weight for reps" format entries
+- John posted reps/weight reversed until ~Jan 27, then switched to correct format
+- John's MSG 1-4 were bulk posts from road with substitute equipment
+- Zioz's first day (Jan 24) had duplicate format-learning posts that needed dedup
+- Source file: `pr_channel_dump.txt` (314 messages from Discord channel 1459000944028028970)
 
 ## EXERCISE NORMALIZATION
 - **Canonical source**: `discord-bot/exercise_normalization.py` (updated Feb 14)
@@ -57,6 +74,7 @@ PRs, Workouts, WorkoutCompletions, DashboardMembers, CoreFoodsCheckins, UserNote
 - **Rules developed from**: ~100 Q&A questions with Dan about how exercises should be named
 - **Covers**: typo corrections, abbreviation expansion (db/bb/bw/kb/ez/rdl/ohp/etc), equipment synonyms, compound words, plural singularization, position reordering, exercise-specific rules (squats, deadlifts, presses, rows, pulldowns, curls, extensions, etc), incline angle normalization, duplicate word removal
 - **TRX auto-append rules removed** (Feb 14) — "trx bicep" and "trx tricep" are too ambiguous to auto-normalize
+- **FIX NEEDED**: ATG split squat must not normalize to bulgarian split squat or rear foot elevated split squat. It is a distinct exercise used by multiple members.
 
 ## WHAT'S WORKING (verified live Feb 14)
 - Full dashboard UI connected to live API (no mock data)
@@ -94,6 +112,7 @@ PRs, Workouts, WorkoutCompletions, DashboardMembers, CoreFoodsCheckins, UserNote
 - Dark theme: #000 bg, Roboto font, mobile-first 430px
 - Direct analysis, no enthusiasm or motivational language
 - Discord ID: 718992882182258769
+- Always explain approach before executing. Dan says "go" before any action.
 
 ## NEXT CONVERSATION STARTUP CHECKLIST
 1. Read this file from GitHub
@@ -102,7 +121,15 @@ PRs, Workouts, WorkoutCompletions, DashboardMembers, CoreFoodsCheckins, UserNote
 4. Ask Dan what to work on next
 5. At END of conversation, update this file with what changed
 
+## NEXT SESSION: COMPLETE THE AUDIT
+1. Process Dan's (coach) PRs from pr_channel_dump.txt — same RAW vs NORMALIZED side-by-side process
+2. Once Dan approves his list, write the DB insert script for all 4 users
+3. Each user: wipe existing PRs, insert approved set with original Discord timestamps
+4. Fix ATG split squat normalization in both exercise_normalization.py and scrape_and_reload.py
+5. Verify all dashboards
+
 ## CHANGE LOG
+- **Feb 14, 2026 (session 3)**: Manual PR audit. Extracted raw Discord dump (314 messages). Built approved PR lists for Warhound (76 PRs), Zioz (29 PRs), John (56 PRs) via side-by-side RAW vs NORMALIZED review with Dan. Discovered scraper was missing ~70+ Warhound PRs (lbs x format), Dan's "for" format entries, all of John's reversed-format entries. Dan (coach) PR list still pending — next session. No DB changes made yet. Identified ATG split squat normalization bug.
 - **Feb 14, 2026 (session 2)**: Data cleanup complete. Built admin rescrape endpoint (`GET /api/admin/rescrape?key=...`) so Dan doesn't need Railway CLI. Added `requests` to requirements.txt. Added `TTM_BOT_TOKEN` env var to API service. Rescrape wipes only Discord-sourced PRs, preserves Feras (41) + Sonny (23) manual PRs. Ran rescrape: 842 dirty PRs → 267 clean PRs (203 scraped + 64 preserved). 158 unique exercises → 119. Dashboard verified working with clean data. API bumped to v1.5.1.
 - **Feb 14, 2026 (session 1)**: Investigated dirty PR data (842 records, 158 exercise names — mix of old un-normalized + scraper output). Root cause: scraper ran with --execute not --wipe. Synced normalization between bot and scraper (bot was using older incomplete rules). Removed TRX auto-append rules from both files. Bot `exercise_normalization.py` now has complete rules from the 100-question session. Next: run scraper with --wipe.
 - **Feb 13, 2026 (earlier chat, not this project)**: Scraper built and run. Bot migrated from SQLite to API for all commands. 203 clean PRs loaded. But scraper used --execute not --wipe, leaving old data in place.

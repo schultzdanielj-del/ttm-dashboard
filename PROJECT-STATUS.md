@@ -15,19 +15,19 @@ Claude: Read this FIRST at the start of every conversation. Pull from `schultzda
 
 ### ✅ Fully working
 - **GitHub read/write** on all repos (discord-bot, ttm-metrics-api, ttm-dashboard) — push to main = auto-deploy
-- **API repo in sync with production** — main.py is the full 46KB v1.5.3 with all 36 routes. Safe to push changes.
+- **API repo in sync with production** — main.py is the full 47KB v1.5.6 with all routes + admin_rebuild. Safe to push changes.
 - **Discord bot repo in sync** — PRBot.py is 39KB, full code, confirmed matching deployed version.
 - **API access via curl** — can hit all endpoints from bash container
 - **Dashboard access via curl** — can fetch frontend from bash container
 - **Direct PostgreSQL access** — DATABASE_PUBLIC_URL is stored in Claude memory. Domain `shuttle.proxy.rlwy.net` is on the allowlist. Works from bash with psycopg2.
 - **Railway API token** — stored in Claude memory. Domain `backboard-v3.railway.app` is on the allowlist. Use for GraphQL API to check deploys, restart services, read logs.
+- **Admin config endpoint** — `GET /api/admin/config?key=<ADMIN_KEY>` returns bot token and admin key from env vars.
+- **Admin SQL endpoint** — `GET /api/admin/sql?key=<ADMIN_KEY>&q=<SELECT...>` runs read-only SQL queries against the database.
+- **Admin rebuild-prs endpoint** — `POST /api/admin/rebuild-prs` with `{"key": "<ADMIN_KEY>", "prs": [...]}` wipes and rebuilds the entire PRs table.
 
 ### 🔧 Works with Dan's help (just ask at session start)
 - **Railway dashboard via Chrome** — ask Dan to have Railway open in browser, then use Chrome extension to view deploys, logs, env vars
 - **Discord via Chrome** — ask Dan to have Discord open in browser for channel visibility
-
-### 🚧 Not yet built (one item remaining)
-- **Bot token / admin key automation** — plan: build `/api/admin/config` endpoint that returns tokens from Railway env vars, secured by ADMIN_KEY. Dan approved approach, not yet implemented. This is the FIRST thing to build next session.
 
 ## REPOSITORIES (all under github.com/schultzdanielj-del)
 
@@ -41,14 +41,20 @@ Claude: Read this FIRST at the start of every conversation. Pull from `schultzda
 
 ### 2. ttm-metrics-api (FastAPI backend)
 - **Deployed**: Railway at `https://ttm-metrics-api-production.up.railway.app`
-- **Version**: v1.5.3 — 36 routes, 46KB main.py, repo synced with production
+- **Version**: v1.5.6 — main.py (47KB) with all routes, repo synced with production
 - **Database**: `database.py` — PostgreSQL on Railway, 10 SQLAlchemy models
 - **Key endpoint**: `GET /api/dashboard/{unique_code}/full` returns everything in one call
 - **Scraper**: `scrape_and_reload.py` — standalone script (can also be triggered via admin endpoint)
-- **Admin rescrape**: `GET /api/admin/rescrape?key=<ADMIN_KEY>` — wipes Discord-sourced PRs, re-scrapes channel, normalizes, reloads. Preserves Feras + Sonny manual PRs. ADMIN_KEY: `4ifQC_DLzlXM1c5PC6egwvf2p5GgbMR3`
+- **Admin endpoints**:
+  - `GET /api/admin/config?key=<ADMIN_KEY>` — returns bot token + admin key from env vars
+  - `GET /api/admin/sql?key=<ADMIN_KEY>&q=<SELECT...>` — read-only SQL queries
+  - `GET /api/admin/rescrape?key=<ADMIN_KEY>` — wipes Discord-sourced PRs, re-scrapes channel (DEPRECATED — use rebuild-prs instead)
+  - `POST /api/admin/rebuild-prs` — body: `{"key": "<ADMIN_KEY>", "prs": [...]}` — wipes entire PRs table, inserts provided records
+  - `GET /api/admin/dump` — full database export
+- **ADMIN_KEY**: `4ifQC_DLzlXM1c5PC6egwvf2p5GgbMR3`
 - **Features working**: PR logging, fuzzy exercise matching (aggregates ALL name variants), workout plans, deload count tracking, core foods toggle, exercise swaps, user notes, 96h session tracking, XP/leveling, member management with unique codes
 - **Debug endpoint**: `GET /api/debug/{unique_code}/exercise-names` — shows PR name groups and workout plan match results
-- **Env vars on Railway**: DATABASE_URL, TTM_BOT_TOKEN (added Feb 14 for rescrape)
+- **Env vars on Railway**: DATABASE_URL, TTM_BOT_TOKEN, ADMIN_KEY
 
 ### 3. discord-bot
 - **Main file**: `PRBot.py` (39KB) — confirmed in sync with deployed version
@@ -64,48 +70,42 @@ PRs, Workouts, WorkoutCompletions, DashboardMembers, CoreFoodsCheckins, UserNote
 
 **Direct DB access**: Use DATABASE_PUBLIC_URL from Claude memory with psycopg2 in bash. Can run arbitrary SQL reads and writes.
 
-## CURRENT DATA STATUS — MANUAL PR AUDIT COMPLETE (Discord users)
+## CURRENT DATA STATUS — PR DATABASE REBUILT AND VERIFIED ✅
+
+### PR Table: 299 records, 99 unique exercises, 6 users — ALL NORMALIZED
+| User | user_id | PRs | Source |
+|------|---------|-----|--------|
+| Dan (coach) | 718992882182258769 | 94 | Discord audit (Jan 11 – Feb 12) |
+| Travis | 188471109363040256 | 76 | Discord audit (Jan 16 – Feb 12) |
+| John | 607043556162666514 | 56 | Discord audit (Jan 5 – Feb 10) |
+| Dan I (Zioz) | 103351819119398912 | 29 | Discord audit (Jan 24 – Feb 10) |
+| Sonny | ND_sonny_a1b2c3d4e5f6 | 23 | API export, normalized |
+| Feras | 919580721922859008 | 21 | API export, deduped (41→21), normalized |
+
+### How the rebuild was done (session 6)
+1. Parsed 4 Discord audit files from `ttm-dashboard/data/` (Dan, Travis, John, Zioz)
+2. Exported Feras + Sonny data via `/api/admin/sql` endpoint
+3. Feras had 20 duplicate PRs (same exercise/weight/reps/timestamp) — deduped to 21 unique
+4. Applied normalization from `exercise_normalization.py` to ALL exercise names
+5. Generated master dataset: 299 PRs, 99 unique exercises
+6. POSTed to `/api/admin/rebuild-prs` endpoint — wiped 267 old records, inserted 299 normalized
+7. Verified via SQL: counts match per user, all exercise names normalized
+
+### Normalization applied
+- DB→dumbbell, BB→barbell, BW→bodyweight
+- Plurals→singular (curls→curl, rows→row, etc.)
+- Abbreviations expanded (UH→underhand, OH→overhead, RDF→rear delt fly)
+- skullcrushers→tricep extension, ab wheel→ab rollout
+- Compound words normalized (chin up→chinup, pull up→pullup)
+- Title Case→lowercase throughout
 
 ### Approved PR audit files (in `ttm-dashboard/data/`)
-| File | User | user_id | PRs | Date range |
-|------|------|---------|-----|------------|
-| `data/dan_raw_vs_normalized.txt` | Dan (coach) | 718992882182258769 | 94 | Jan 11 – Feb 12 |
-| `data/warhound_raw_vs_normalized.txt` | Travis | 188471109363040256 | 76 | Jan 16 – Feb 12 |
-| `data/john_raw_vs_normalized.txt` | John | 607043556162666514 | 56 | Jan 5 – Feb 10 |
-| `data/zioz_raw_vs_normalized.txt` | Dan I | 103351819119398912 | 29 | Jan 24 – Feb 10 |
-
-Each file contains every Discord message from that user with RAW text and normalized exercise/weight/reps. Each PR has its original msg_id and timestamp for DB insertion.
-
-### Non-Discord users (still in DB, not yet exported)
-| User | user_id | PRs | Notes |
-|------|---------|-----|-------|
-| Feras | 919580721922859008 | 41 | Manual entry, Title Case names, needs normalization to lowercase |
-| Sonny | ND_sonny_a1b2c3d4e5f6 | 23 | Manual entry, no Discord account, non-numeric user_id works fine (String column) |
-
-### What's left
-1. Export Feras + Sonny PR data from current DB (direct SQL access now available)
-2. Normalize Feras + Sonny exercise names to lowercase
-3. Combine all 6 users into one master insert file
-4. Wipe PRs table, insert all approved data with correct timestamps
-5. Fix ATG split squat normalization in both exercise_normalization.py and scrape_and_reload.py
-6. Verify all dashboards
-
-### Key findings from audit
-- Scraper missed ~70+ Warhound PRs (nearly all of his) due to "Nlbs x N" format
-- Scraper missed Dan's "weight for reps" format entries
-- John posted reps/weight reversed until ~Jan 27, then switched to correct format
-- John's MSG 1-4 were bulk posts from road with substitute equipment
-- Zioz's first day (Jan 24) had duplicate format-learning posts that needed dedup
-- Source file: `pr_channel_dump.txt` (314 messages from Discord channel 1459000944028028970)
-
-## CLAUDE SANDBOX NETWORK ACCESS
-Domains on allowlist:
-- `ttm-metrics-api-production.up.railway.app` (API)
-- `dashboard-production-79f2.up.railway.app` (frontend)
-- `shuttle.proxy.rlwy.net` (PostgreSQL public proxy)
-- `backboard-v3.railway.app` (Railway GraphQL API)
-
-All four confirmed on allowlist. DB and Railway API domains added this session — require new session to take effect.
+| File | User | PRs |
+|------|------|-----|
+| `data/dan_raw_vs_normalized.txt` | Dan | 94 |
+| `data/warhound_raw_vs_normalized.txt` | Travis | 76 |
+| `data/john_raw_vs_normalized.txt` | John | 56 |
+| `data/zioz_raw_vs_normalized.txt` | Dan I | 29 |
 
 ## EXERCISE NORMALIZATION
 - **Canonical source**: `discord-bot/exercise_normalization.py` (updated Feb 14)
@@ -118,7 +118,7 @@ All four confirmed on allowlist. DB and Railway API domains added this session �
 ## WHAT'S WORKING (verified live Feb 14)
 - Full dashboard UI connected to live API (no mock data)
 - Single-endpoint data fetch on mount (`/full`)
-- Clean PR data with normalized exercise names
+- Clean PR data with 299 normalized records across 6 users
 - Fuzzy exercise matching connecting workout plan names to PR data (e.g. "Head Supported RDF" → "head supported rear delt fly")
 - Per-exercise logging with real-time PR detection (e1rm comparison)
 - Core foods 7-day rolling calendar with tap/double-tap, 3-day edit window
@@ -128,7 +128,8 @@ All four confirmed on allowlist. DB and Railway API domains added this session �
 - 96h session tracking (server-side)
 - Cycle progress bar (stat panel 0)
 - Dashboard member system with unique codes and URLs
-- Admin rescrape endpoint (browser-triggered, no CLI needed)
+- Admin rebuild-prs endpoint for complete DB reconstruction
+- Admin SQL endpoint for ad-hoc queries
 
 ## WHAT'S NOT DONE YET
 1. **Deload cascade** — API just increments completion count and resets on 7-day gap. Missing: first-to-6 triggers cascade, others get 1 more session, 10-day max auto-deload, 7-day inactivity auto-reset
@@ -143,7 +144,8 @@ All four confirmed on allowlist. DB and Railway API domains added this session �
 - API root: `https://ttm-metrics-api-production.up.railway.app/`
 - API docs: `https://ttm-metrics-api-production.up.railway.app/docs`
 - Members list: `GET /api/dashboard/members`
-- Admin rescrape: `GET /api/admin/rescrape?key=4ifQC_DLzlXM1c5PC6egwvf2p5GgbMR3`
+- Admin rebuild: `POST /api/admin/rebuild-prs` (body: `{"key": "...", "prs": [...]}`)
+- Admin SQL: `GET /api/admin/sql?key=...&q=SELECT...`
 
 ## DAN'S PREFERENCES
 - Iterates conversationally — Claude handles ALL code, pushes to GitHub
@@ -156,20 +158,17 @@ All four confirmed on allowlist. DB and Railway API domains added this session �
 ## NEXT CONVERSATION STARTUP CHECKLIST
 1. Read this file from GitHub
 2. Read `ttm-dashboard-spec.md` from same repo
-3. Test direct PostgreSQL connection via DATABASE_PUBLIC_URL (from Claude memory)
-4. Test Railway GraphQL API via token (from Claude memory)
-5. Test bash curl to Railway API
-6. Check if Chrome extension is connected
-7. Ask Dan to open Railway dashboard and/or Discord in browser if needed for the session's work
-8. Ask Dan what to work on next
-9. At END of conversation, update this file with what changed
+3. Test bash curl to Railway API (check version)
+4. Check if Chrome extension is connected
+5. Ask Dan what to work on next
+6. At END of conversation, update this file with what changed
 
 ## NEXT SESSION: PRIORITIES
-1. Build `/api/admin/config` endpoint (returns bot token + admin key from env vars, secured by ADMIN_KEY) — last access model item
-2. Test new allowlist domains (PostgreSQL direct, Railway GraphQL API)
-3. Then resume: finalize DB rebuild (export Feras+Sonny, combine all 6 users, wipe+insert, fix ATG normalization)
+1. Fix ATG split squat normalization in both exercise_normalization.py and scrape_and_reload.py
+2. Resume feature work — deload cascade, UP NEXT/BEHIND badges, strength gains panel, or whatever Dan wants
 
 ## CHANGE LOG
+- **Feb 14, 2026 (session 6)**: PR database rebuild complete. Added `/api/admin/sql` endpoint (v1.5.5) for read-only SQL queries. Added `/api/admin/rebuild-prs` endpoint (v1.5.6, new file `admin_rebuild.py`) for full PR table wipe+insert. Exported Feras (41 PRs, deduped to 21) and Sonny (23 PRs) via SQL endpoint. Parsed 4 Discord audit files. Applied normalization from exercise_normalization.py to all 299 PRs. POSTed master dataset to rebuild endpoint: 267 old → 299 normalized. Verified: 6 users, 99 unique exercises, all lowercase, no abbreviations. Data cleanup arc is COMPLETE.
 - **Feb 14, 2026 (session 5, end)**: Railway API token created and stored in Claude memory. Added `backboard-v3.railway.app` to sandbox allowlist. Decided: Railway token in memory, bot token behind /api/admin/config endpoint. Updated access model — only one item remaining (config endpoint). Updated next session priorities. Cleaned up duplicate memory edits.
 - **Feb 14, 2026 (session 5, start)**: Restored full main.py to API repo — recovered 42KB v1.4.0 from git history (commit a613c35), added admin_dump router, bumped to v1.5.3. All 36 routes now live and repo matches production. Added DATABASE_PUBLIC_URL to Claude memory. Added `shuttle.proxy.rlwy.net` to sandbox allowlist for direct PostgreSQL access. Confirmed discord-bot repo is in sync (PRBot.py 39KB, not a stub). Documented full Claude access model in PROJECT-STATUS.md.
 - **Feb 14, 2026 (session 4)**: Completed Dan's PR audit (94 PRs from 155 messages). All 4 Discord users now approved. Pushed all audit files to `ttm-dashboard/data/` on GitHub. Added Railway domains to Claude sandbox allowlist (ttm-metrics-api-production.up.railway.app, dashboard-production-79f2.up.railway.app). Discovered main.py on GitHub (1.4KB) diverged from deployed version (~44KB with all routes) — DO NOT overwrite. Updated PROJECT-STATUS.md with audit file locations and next steps. Still need: export Feras+Sonny data, combine all 6 users, wipe+insert DB.

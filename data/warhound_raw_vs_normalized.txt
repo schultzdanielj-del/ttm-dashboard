@@ -1,0 +1,393 @@
+================================================================================
+WARHOUND (Travis) — RAW vs NORMALIZED COMPARISON
+user_id: 188471109363040256 | username: travis
+================================================================================
+
+--- MSG 1 | 2026-01-16 | msg_id: 1461709830346641519 ---
+RAW: LEG DAY
+  → SKIP (header)
+
+RAW: Reverse Lunges - 0/14 (bodyweight assisted by grip)
+  → #1  reverse lunge | BW/14
+
+RAW: Swiss Ball Leg Curls - 0/18 (bodyweight)
+  → #2  stability ball leg curl | BW/18
+
+RAW: Goblet Squats to Box - 50/17
+  → #3  goblet squat | 50/17
+
+RAW: Barbell Hip Thrust - 105/19
+  → #4  hip thrust | 105/19
+
+
+--- MSG 2 | 2026-01-23 | msg_id: 1464079266240004167 ---
+RAW: CHEST & BICEP DAY
+  → SKIP (header)
+
+RAW: Incline Single Arm Dumbbell Bench – 50lbs x 6 reps
+  → #5  incline single arm dumbbell bench press | 50/6
+
+RAW: Flat Single Arm Dumbbell Bench – 45lbs x 13 reps
+  → #6  single arm dumbbell bench press | 45/13
+
+RAW: Flat DB Flys – 25lbs x 17 reps
+  → #7  flat fly | 25/17
+
+RAW: Seated Underhand Grip Dumbbell Curls – 25lbs x 12 reps
+  → #8  seated underhand dumbbell curl | 25/12
+
+RAW: Standing Underhand Grip Dumbbell Curls – 25lbs x 11 reps
+  → #9  standing underhand dumbbell curl | 25/11
+
+RAW: Reverse Grip EZ Bar Curls – 50lbs x 11 reps
+  → #10 reverse grip ez bar curl | 50/11
+
+RAW: No PRs to report, most of these are new on this cycle.
+  → SKIP (commentary)
+
+
+--- MSG 3 | 2026-01-26 | msg_id: 1465332519456211158 ---
+RAW: BACK DAY
+  → SKIP (header)
+
+RAW: Wide Grip Machine Cable Pulldown – 125 lbs x 13 (PR reps)
+  → #11 wide grip lat pulldown | 125/13
+
+RAW: Underhand Grip Machine Cable Pulldown – 100 lbs x 12 (new exercise)
+  → #12 underhand grip lat pulldown | 100/12
+
+RAW: Chest Supported Dumbell Row – 50 lbs x 12
+  → #13 chest supported dumbbell row | 50/12
+
+RAW: Single Arm Dumbell Row – 55 lbs x 13 (PR increased weight from 50)
+  → #14 single arm dumbbell row | 55/13
+
+RAW: Chest Supported Rear Delt Flys – 15 lbs x 13
+  → #15 chest supported rear delt fly | 15/13
+
+RAW: Head Supported Rear Delt Flys – 15 lbs x 14 (tied previous PR)
+  → #16 head supported rear delt fly | 15/14
+
+RAW: Did this on Saturday. Had a lot better return to form...
+  → SKIP (commentary)
+
+
+--- MSG 4 | 2026-01-26 | msg_id: 1465333914456559779 ---
+RAW: SHOULDER AND TRICEPS DAY (yesterday)
+  → SKIP (header)
+
+RAW: High Incline Dumbell Press – 45 lbs x 14 (PR)
+  → #17 high incline dumbbell bench press | 45/14
+
+RAW: Seated Lateral Raises – 20 lbs x 10
+  → #18 seated lateral raise | 20/10
+
+RAW: Standing Lateral Raises – 20 lbs x 13
+  → #19 standing lateral raise | 20/13
+
+RAW: Dumbell Tricep Extensions – 20 lbs x 15 – (just under PR)
+  → #20 dumbbell tricep extension | 20/15
+
+RAW: Incline EZ Bar Extensions – 40 lbs x 12
+  → #21 incline ez bar tricep extension | 40/12
+
+RAW: Stragiht Bar Cable Machine Pushdowns – 40 lbs x 13
+  → #22 tricep pushdown | 40/13
+
+RAW: Working on lifting from the elbows on laterals...
+  → SKIP (commentary)
+
+
+--- MSG 5 | 2026-01-27 | msg_id: 1465695939447623782 ---
+RAW: LEG DAY (Yesterday)
+  → SKIP (header)
+
+RAW: Reverse Lunges – Bodyweight x 7 reps (unassisted)
+  → #23 reverse lunge | BW/7
+
+RAW: Swiss Ball Leg Curls – Bodyweight x 20 reps (PR)
+  → #24 stability ball leg curl | BW/20
+
+RAW: Goblet Squats to Box - 50 lbs x 20 reps (PR reps)
+  → #25 goblet squat | 50/20
+
+RAW: Barbell Hip Thrust – 115 lbs x 14 (PR weight)
+  → #26 hip thrust | 115/14
+
+RAW: The initial return back from the deload was a mixed bag...
+  → SKIP (commentary)
+
+
+--- MSG 6 | 2026-01-29 | msg_id: 1466419458326270105 ---
+RAW: Core & Calves Day
+  → SKIP (header)
+
+RAW: Planks – Bodyweight x 71 seconds (PR)
+  → #27 plank | BW/71
+
+RAW: Side Planks – Bodyweight x 29 seconds (PR)
+  → #28 side plank | BW/29
+
+RAW: Situps – Bodyweight x 7 (PR)
+  → #29 situp | BW/7
+
+RAW: Double Leg Calf Raises – Bodyweight x 36 reps (PR)
+  → #30 standing calf raise | BW/36
+
+RAW: Seated Calf Raises – 75lbs x 26 reps (PR)
+  → #31 seated calf raise | 75/26
+
+
+--- MSG 7 | 2026-02-01 | msg_id: 1467604083006374021 ---
+RAW: CHEST DAY (Yesterday)
+  → SKIP (header)
+
+RAW: Incline Single Arm Dumbell Bench 35lbs x 20 (PR)
+  → #32 incline single arm dumbbell bench press | 35/20
+
+RAW: Flat Single Arm Dumbell Bench 40lbs x 15 (PR)
+  → #33 single arm dumbbell bench press | 40/15
+
+RAW: Flat DB Flys 25lbs x 22 (PR)
+  → #34 flat fly | 25/22
+
+RAW: Seated Underhand Grip Dumbell Curls 25lbs x 17 (PR)
+  → #35 seated underhand dumbbell curl | 25/17
+
+RAW: Standing Underhand Grip Dumbell Curls 25lbs x 16 (PR)
+  → #36 standing underhand dumbbell curl | 25/16
+
+RAW: Reverse Grip EZ Bar Curls 50lbs x 13 (PR)
+  → #37 reverse grip ez bar curl | 50/13
+
+RAW: Core Foods Eaten
+  → SKIP (core foods)
+
+
+--- MSG 8 | 2026-02-01 | msg_id: 1467604966326927461 ---
+RAW: BACK DAY (Today)
+  → SKIP (header)
+
+RAW: Wide Grip Machine Cable Pulldown 125lbs x 14 (PR)
+  → #38 wide grip lat pulldown | 125/14
+
+RAW: Underhand Grip Machine Cable Pulldown 100lbs x 14 (PR)
+  → #39 underhand grip lat pulldown | 100/14
+
+RAW: Chest Supported Dumbell Row 50lbs x 11
+  → #40 chest supported dumbbell row | 50/11
+
+RAW: Single Arm Dumbell Row 55lbs x 15 (PR)
+  → #41 single arm dumbbell row | 55/15
+
+RAW: Chest Supported Rear Delt Flys 15lbs x 16 (tied previous PR)
+  → #42 chest supported rear delt fly | 15/16
+
+RAW: Head Supported Rear Delt Flys 15lbs x 14 (tied previous PR)
+  → #43 head supported rear delt fly | 15/14
+
+RAW: Off to a fantastic start this week but my upper body is cocked...
+  → SKIP (commentary)
+
+
+--- MSG 9 | 2026-02-01 | msg_id: 1467615740570894389 ---
+RAW: Its beyond cooked… where you work out so hard you get veiny
+  → SKIP (commentary, no PRs)
+
+
+--- MSG 10 | 2026-02-05 | msg_id: 1468956305518624853 ---
+RAW: Shoulders  & Traps
+  → SKIP (header)
+
+RAW: High Incline Dumbbell Press 45 lbs x 12
+  → #44 high incline dumbbell bench press | 45/12
+
+RAW: Seated Lateral Raises 20 lbs x 12 (PR)
+  → #45 seated lateral raise | 20/12
+
+RAW: Standing Lateral Raises 20 lbs x 12 (tied previous PR)
+  → #46 standing lateral raise | 20/12
+
+RAW: Dumbbell Tricep Extensions 20 lbs x 14 (PR)
+  → #47 dumbbell tricep extension | 20/14
+
+RAW: Incline EZ Bar Extensions 40 lbs x 13
+  → #48 incline ez bar tricep extension | 40/13
+
+RAW: Straight Bar Cable Machine Pushdowns 42.5 lbs x 20 (PR)
+  → #49 tricep pushdown | 42.5/20
+
+
+--- MSG 11 | 2026-02-05 | msg_id: 1468999308639473665 ---
+RAW: I had a particulary rough day on the shoulder press...
+  → SKIP (commentary, no PRs)
+
+
+--- MSG 12 | 2026-02-06 | msg_id: 1469333378900820098 ---
+RAW: Leg Day (Yesterday)
+  → SKIP (header)
+
+RAW: Reverse Lunges - Body x 7
+  → #50 reverse lunge | BW/7
+
+RAW: Swiss Ball Leg Curls - Body x 21 (PR)
+  → #51 stability ball leg curl | BW/21
+
+RAW: Goblet Squats to Box - 50 lbs x 18
+  → #52 goblet squat | 50/18
+
+RAW: Barbell Hip Thrust - 115 lbs x 16 (PR)
+  → #53 hip thrust | 115/16
+
+
+--- MSG 13 | 2026-02-09 | msg_id: 1470418292341477458 ---
+RAW: Core and Calves Day (Saturday)
+  → SKIP (header)
+
+RAW: Planks - Body x 83sec (PR)
+  → #54 plank | BW/83
+
+RAW: Side Planks - Body x 35 sec (PR)
+  → #55 side plank | BW/35
+
+RAW: Situps - Body x 7 (tied previous PR)
+  → #56 situp | BW/7
+
+RAW: Double Leg Calf Raises - Body x 39 (PR)
+  → #57 standing calf raise | BW/39
+
+RAW: Seated Calf Raises - 85lbs x 18 (PR)
+  → #58 seated calf raise | 85/18
+
+
+--- MSG 14 | 2026-02-09 | msg_id: 1470418855343161487 ---
+RAW: Chest Day (Sunday)
+  → SKIP (header)
+
+RAW: Incline Single Arm Dumbell Bench - 40 lbs x 16 (PR)
+  → #59 incline single arm dumbbell bench press | 40/16
+
+RAW: Flat Single Arm Dumbbell Bench - 40 lbs x 18 (PR)
+  → #60 single arm dumbbell bench press | 40/18
+
+RAW: Flat DB Flys - 30 lbs (PR)
+  → #61 flat fly | 30/10  ← reps missing from Discord, you said 10
+
+RAW: Seated Underhand Grip Dumbbell Curls - 25 lbs x 19 (PR)
+  → #62 seated underhand dumbbell curl | 25/19
+
+RAW: Standing Underhand Grip Dumbbell Curls - 25 lbs x 19 (PR)
+  → #63 standing underhand dumbbell curl | 25/19
+
+RAW: Reverse Grip EZ Bar Curls - 50 lbs x 14 (PR)
+  → #64 reverse grip ez bar curl | 50/14
+
+RAW: Core foods eaten
+  → SKIP (core foods)
+
+
+--- MSG 15 | 2026-02-09 | msg_id: 1470431489404698725 ---
+RAW: Yeah that makes complete sense
+  → SKIP (commentary, no PRs)
+
+
+--- MSG 16 | 2026-02-09 | msg_id: 1470431770712215664 ---
+RAW: Also yesterday, took a huge bag of frozen brocoli...
+  → SKIP (commentary, no PRs)
+
+
+--- MSG 17 | 2026-02-10 | msg_id: 1470802210555298096 ---
+RAW: Back Day
+  → SKIP (header)
+
+RAW: Wide Grip Machine Cable Pulldown - 125 lbs x 15 (PR)
+  → #65 wide grip lat pulldown | 125/15
+
+RAW: Underhand Grip Machine Cable Pulldown - 100 lbs x 16 (PR)
+  → #66 underhand grip lat pulldown | 100/16
+
+RAW: Chest Supported Dumbell Row - 50 lbs x 8
+  → #67 chest supported dumbbell row | 50/8
+
+RAW: Single Arm Dumbbell Row - 55 lbs x 15 (PR)
+  → #68 single arm dumbbell row | 55/15
+
+RAW: Chest Supported Rear Delt Flys - 15 lbs x 18 (PR)
+  → #69 chest supported rear delt fly | 15/18
+
+RAW: Head Supported Rear Delt Flys - 15 lbs x 13 (1 below previous PR)
+  → #70 head supported rear delt fly | 15/13
+
+RAW: Overall a really great day with a lot of PRs...
+  → SKIP (commentary)
+
+
+--- MSG 18 | 2026-02-10 | msg_id: 1470803235005534229 ---
+RAW: Sorry I meant *warmup more
+  → SKIP (commentary, no PRs)
+
+
+--- MSG 19 | 2026-02-10 | msg_id: 1470889215897239777 ---
+RAW: Core Foods Eaten (2 x Chicken Breasts and 2 x Bell Peppers...)
+  → SKIP (core foods)
+
+
+--- MSG 20 | 2026-02-10 | msg_id: 1470896352039796889 ---
+RAW: S&P and some taco seasoning…
+  → SKIP (commentary, no PRs)
+
+
+--- MSG 21 | 2026-02-10 | msg_id: 1470897635568124118 ---
+RAW: Err I am a little short of that, I'll find something
+  → SKIP (commentary, no PRs)
+
+
+--- MSG 22 | 2026-02-12 | msg_id: 1471322605683474432 ---
+RAW: Core foods eaten
+  → SKIP (core foods)
+
+
+--- MSG 23 | 2026-02-12 | msg_id: 1471559555904311481 ---
+RAW: Shoulders & Triceps
+  → SKIP (header)
+
+RAW: High Incline Dumbbell Press - 45 lbs x 14 (tied previous PR)
+  → #71 high incline dumbbell bench press | 45/14
+
+RAW: Seated Lateral Raises - 20 lbs x 15 (PR)
+  → #72 seated lateral raise | 20/15
+
+RAW: Standing Lateral Raises - 20 lbs x 12
+  → #73 standing lateral raise | 20/12
+
+RAW: Dumbbell Tricep Extensions - 20 lbs x 15 (PR)
+  → #74 dumbbell tricep extension | 20/15
+
+RAW: Incline EZ Bar Extensions - 40 lbs x 15 (PR)
+  → #75 incline ez bar tricep extension | 40/15
+
+RAW: Straight Bar Cable Machine Pushdowns - 42.5 lbs x 20 (tied previous PR)
+  → #76 tricep pushdown | 42.5/20
+
+RAW: Another great day… I don't know if I wanted to do this last time...
+  → SKIP (commentary)
+
+
+--- MSG 24 | 2026-02-12 | msg_id: 1471569256297529422 ---
+RAW: The joints are feeling good, its the muscle thats hurting
+  → SKIP (commentary, no PRs)
+
+
+--- MSG 25 | 2026-02-12 | msg_id: 1471569320763986086 ---
+RAW: From the laterals I feel more than anything
+  → SKIP (commentary, no PRs)
+
+
+--- MSG 26 | 2026-02-12 | msg_id: 1471623250609045566 ---
+RAW: Core foods eaten
+  → SKIP (core foods)
+
+
+================================================================================
+SUMMARY: 76 PRs extracted from 26 messages (13 workout posts, 13 non-PR messages)
+================================================================================

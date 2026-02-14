@@ -20,14 +20,14 @@ Claude: Read this FIRST at the start of every conversation. Pull from `schultzda
 - **API access via curl** — can hit all endpoints from bash container
 - **Dashboard access via curl** — can fetch frontend from bash container
 - **Direct PostgreSQL access** — DATABASE_PUBLIC_URL is stored in Claude memory. Domain `shuttle.proxy.rlwy.net` is on the allowlist. Works from bash with psycopg2.
+- **Railway API token** — stored in Claude memory. Domain `backboard-v3.railway.app` is on the allowlist. Use for GraphQL API to check deploys, restart services, read logs.
 
 ### 🔧 Works with Dan's help (just ask at session start)
 - **Railway dashboard via Chrome** — ask Dan to have Railway open in browser, then use Chrome extension to view deploys, logs, env vars
 - **Discord via Chrome** — ask Dan to have Discord open in browser for channel visibility
 
-### 🚧 Not yet built
-- **Bot token / admin key automation** — plan: build `/api/admin/config` endpoint that returns tokens from Railway env vars. Eliminates need to paste credentials each session. Dan approved approach, not yet implemented.
-- **Railway API token** — Dan needs to create token in Railway Account Settings → Tokens. Once provided, enables programmatic deploy checks, restart services, read logs without Chrome. Decision pending: store in Claude memory vs behind the config endpoint.
+### 🚧 Not yet built (one item remaining)
+- **Bot token / admin key automation** — plan: build `/api/admin/config` endpoint that returns tokens from Railway env vars, secured by ADMIN_KEY. Dan approved approach, not yet implemented. This is the FIRST thing to build next session.
 
 ## REPOSITORIES (all under github.com/schultzdanielj-del)
 
@@ -103,8 +103,9 @@ Domains on allowlist:
 - `ttm-metrics-api-production.up.railway.app` (API)
 - `dashboard-production-79f2.up.railway.app` (frontend)
 - `shuttle.proxy.rlwy.net` (PostgreSQL public proxy)
+- `backboard-v3.railway.app` (Railway GraphQL API)
 
-All three confirmed working from bash container.
+All four confirmed on allowlist. DB and Railway API domains added this session — require new session to take effect.
 
 ## EXERCISE NORMALIZATION
 - **Canonical source**: `discord-bot/exercise_normalization.py` (updated Feb 14)
@@ -156,19 +157,21 @@ All three confirmed working from bash container.
 1. Read this file from GitHub
 2. Read `ttm-dashboard-spec.md` from same repo
 3. Test direct PostgreSQL connection via DATABASE_PUBLIC_URL (from Claude memory)
-4. Test bash curl to Railway API
-5. Check if Chrome extension is connected
-6. Ask Dan to open Railway dashboard and/or Discord in browser if needed for the session's work
-7. Ask Dan what to work on next
-8. At END of conversation, update this file with what changed
+4. Test Railway GraphQL API via token (from Claude memory)
+5. Test bash curl to Railway API
+6. Check if Chrome extension is connected
+7. Ask Dan to open Railway dashboard and/or Discord in browser if needed for the session's work
+8. Ask Dan what to work on next
+9. At END of conversation, update this file with what changed
 
 ## NEXT SESSION: PRIORITIES
-1. Build `/api/admin/config` endpoint (returns bot token + admin key from env vars, secured by static key)
-2. Dan creates Railway API token, decides storage approach (memory vs config endpoint)
+1. Build `/api/admin/config` endpoint (returns bot token + admin key from env vars, secured by ADMIN_KEY) — last access model item
+2. Test new allowlist domains (PostgreSQL direct, Railway GraphQL API)
 3. Then resume: finalize DB rebuild (export Feras+Sonny, combine all 6 users, wipe+insert, fix ATG normalization)
 
 ## CHANGE LOG
-- **Feb 14, 2026 (session 5)**: Restored full main.py to API repo — recovered 42KB v1.4.0 from git history (commit a613c35), added admin_dump router, bumped to v1.5.3. All 36 routes now live and repo matches production. Added DATABASE_PUBLIC_URL to Claude memory. Added `shuttle.proxy.rlwy.net` to sandbox allowlist for direct PostgreSQL access (works next session). Confirmed discord-bot repo is in sync (PRBot.py 39KB, not a stub). Documented full Claude access model in PROJECT-STATUS.md. Planned but not yet built: `/api/admin/config` endpoint for token automation, Railway API token.
+- **Feb 14, 2026 (session 5, end)**: Railway API token created and stored in Claude memory. Added `backboard-v3.railway.app` to sandbox allowlist. Decided: Railway token in memory, bot token behind /api/admin/config endpoint. Updated access model — only one item remaining (config endpoint). Updated next session priorities. Cleaned up duplicate memory edits.
+- **Feb 14, 2026 (session 5, start)**: Restored full main.py to API repo — recovered 42KB v1.4.0 from git history (commit a613c35), added admin_dump router, bumped to v1.5.3. All 36 routes now live and repo matches production. Added DATABASE_PUBLIC_URL to Claude memory. Added `shuttle.proxy.rlwy.net` to sandbox allowlist for direct PostgreSQL access. Confirmed discord-bot repo is in sync (PRBot.py 39KB, not a stub). Documented full Claude access model in PROJECT-STATUS.md.
 - **Feb 14, 2026 (session 4)**: Completed Dan's PR audit (94 PRs from 155 messages). All 4 Discord users now approved. Pushed all audit files to `ttm-dashboard/data/` on GitHub. Added Railway domains to Claude sandbox allowlist (ttm-metrics-api-production.up.railway.app, dashboard-production-79f2.up.railway.app). Discovered main.py on GitHub (1.4KB) diverged from deployed version (~44KB with all routes) — DO NOT overwrite. Updated PROJECT-STATUS.md with audit file locations and next steps. Still need: export Feras+Sonny data, combine all 6 users, wipe+insert DB.
 - **Feb 14, 2026 (session 3)**: Manual PR audit. Extracted raw Discord dump (314 messages). Built approved PR lists for Warhound (76 PRs), Zioz (29 PRs), John (56 PRs) via side-by-side RAW vs NORMALIZED review with Dan. Discovered scraper was missing ~70+ Warhound PRs (lbs x format), Dan's "for" format entries, all of John's reversed-format entries. Dan (coach) PR list still pending — next session. No DB changes made yet. Identified ATG split squat normalization bug.
 - **Feb 14, 2026 (session 2)**: Data cleanup complete. Built admin rescrape endpoint (`GET /api/admin/rescrape?key=...`) so Dan doesn't need Railway CLI. Added `requests` to requirements.txt. Added `TTM_BOT_TOKEN` env var to API service. Rescrape wipes only Discord-sourced PRs, preserves Feras (41) + Sonny (23) manual PRs. Ran rescrape: 842 dirty PRs → 267 clean PRs (203 scraped + 64 preserved). 158 unique exercises → 119. Dashboard verified working with clean data. API bumped to v1.5.1.

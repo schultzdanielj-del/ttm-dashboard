@@ -19,10 +19,11 @@ Claude: Read this FIRST at the start of every conversation. Pull from `schultzda
 - **API client**: Direct fetch calls in App.tsx (the `src/api.ts` file exists but is UNUSED)
 - **Stack**: React + TypeScript + Vite + Tailwind
 - **Config**: `.env` has `VITE_API_URL`
+- **Data files**: `data/` folder contains approved PR audit files (see Data Status below)
 
 ### 2. ttm-metrics-api (FastAPI backend)
 - **Deployed**: Railway at `https://ttm-metrics-api-production.up.railway.app`
-- **Main file**: `main.py` (~44KB) — FastAPI v1.5.1
+- **⚠️ CRITICAL**: `main.py` on GitHub (1.4KB) is NOT what's deployed on Railway. Deployed version still has all routes (~44KB). DO NOT overwrite main.py on GitHub or it will break prod.
 - **Database**: `database.py` — PostgreSQL on Railway, 10 SQLAlchemy models
 - **Key endpoint**: `GET /api/dashboard/{unique_code}/full` returns everything in one call
 - **Scraper**: `scrape_and_reload.py` — standalone script (can also be triggered via admin endpoint)
@@ -43,22 +44,31 @@ Claude: Read this FIRST at the start of every conversation. Pull from `schultzda
 ## DATABASE TABLES (PostgreSQL on Railway)
 PRs, Workouts, WorkoutCompletions, DashboardMembers, CoreFoodsCheckins, UserNotes, ExerciseSwaps, WorkoutSessions, UserXP, WeeklyLogs
 
-## CURRENT DATA STATUS — MANUAL PR AUDIT IN PROGRESS
+## CURRENT DATA STATUS — MANUAL PR AUDIT COMPLETE (Discord users)
 
-### What happened
-The automated scraper was missing PRs due to format variations (e.g. "40 for 17", "50lbs x 13", "Bodyweight x 7", reversed reps/weight). Instead of fixing the parser for edge cases that won't recur once members use the dashboard, we're doing a manual audit: extract each member's Discord posts, normalize by hand with Dan's approval, then replace their DB entries with the approved clean set using original Discord timestamps.
+### Approved PR audit files (in `ttm-dashboard/data/`)
+| File | User | user_id | PRs | Date range |
+|------|------|---------|-----|------------|
+| `data/dan_raw_vs_normalized.txt` | Dan (coach) | 718992882182258769 | 94 | Jan 11 – Feb 12 |
+| `data/warhound_raw_vs_normalized.txt` | Travis | 188471109363040256 | 76 | Jan 16 – Feb 12 |
+| `data/john_raw_vs_normalized.txt` | John | 607043556162666514 | 56 | Jan 5 – Feb 10 |
+| `data/zioz_raw_vs_normalized.txt` | Dan I | 103351819119398912 | 29 | Jan 24 – Feb 10 |
 
-### Audit status
-- **Warhound (Travis)**: ✅ APPROVED — 76 PRs. File: `warhound_raw_vs_normalized.txt`
-- **Zioz (Dan I)**: ✅ APPROVED — 29 PRs. File: `zioz_raw_vs_normalized.txt`
-- **John (simplyhabby)**: ✅ APPROVED — 56 PRs. File: `john_raw_vs_normalized.txt`
-- **Dan (coach)**: ❌ NOT STARTED — next session
+Each file contains every Discord message from that user with RAW text and normalized exercise/weight/reps. Each PR has its original msg_id and timestamp for DB insertion.
 
-### What's left after audit completes
-1. Wipe each user's existing PRs from DB
-2. Insert approved PR sets with correct Discord timestamps (currently all timestamps show rescrape time, not original post time)
-3. Fix normalization: ATG split squat must NOT map to bulgarian/rear foot elevated split squat — it's a distinct exercise
-4. Verify dashboards show correct data post-insert
+### Non-Discord users (still in DB, not yet exported)
+| User | user_id | PRs | Notes |
+|------|---------|-----|-------|
+| Feras | 919580721922859008 | 41 | Manual entry, Title Case names, needs normalization to lowercase |
+| Sonny | ND_sonny_a1b2c3d4e5f6 | 23 | Manual entry, no Discord account, non-numeric user_id works fine (String column) |
+
+### What's left
+1. Export Feras + Sonny PR data from current DB (need API access — Railway domains now on Claude sandbox allowlist, test in new session)
+2. Normalize Feras + Sonny exercise names to lowercase
+3. Combine all 6 users into one master insert file
+4. Wipe PRs table, insert all approved data with correct timestamps
+5. Fix ATG split squat normalization in both exercise_normalization.py and scrape_and_reload.py
+6. Verify all dashboards
 
 ### Key findings from audit
 - Scraper missed ~70+ Warhound PRs (nearly all of his) due to "Nlbs x N" format
@@ -67,6 +77,12 @@ The automated scraper was missing PRs due to format variations (e.g. "40 for 17"
 - John's MSG 1-4 were bulk posts from road with substitute equipment
 - Zioz's first day (Jan 24) had duplicate format-learning posts that needed dedup
 - Source file: `pr_channel_dump.txt` (314 messages from Discord channel 1459000944028028970)
+
+## CLAUDE SANDBOX NETWORK ACCESS
+Railway domains added to Claude sandbox allowlist (Feb 14):
+- `ttm-metrics-api-production.up.railway.app` (API)
+- `dashboard-production-79f2.up.railway.app` (frontend)
+These should allow bash curl access in new sessions. Test at start of next session.
 
 ## EXERCISE NORMALIZATION
 - **Canonical source**: `discord-bot/exercise_normalization.py` (updated Feb 14)
@@ -117,18 +133,21 @@ The automated scraper was missing PRs due to format variations (e.g. "40 for 17"
 ## NEXT CONVERSATION STARTUP CHECKLIST
 1. Read this file from GitHub
 2. Read `ttm-dashboard-spec.md` from same repo
-3. Check if Chrome extension is connected — if yes, open Railway dashboard + live dashboard to verify deployment
-4. Ask Dan what to work on next
-5. At END of conversation, update this file with what changed
+3. Test bash curl to Railway API (verify sandbox domain allowlist works)
+4. Check if Chrome extension is connected
+5. Ask Dan what to work on next
+6. At END of conversation, update this file with what changed
 
-## NEXT SESSION: COMPLETE THE AUDIT
-1. Process Dan's (coach) PRs from pr_channel_dump.txt — same RAW vs NORMALIZED side-by-side process
-2. Once Dan approves his list, write the DB insert script for all 4 users
-3. Each user: wipe existing PRs, insert approved set with original Discord timestamps
-4. Fix ATG split squat normalization in both exercise_normalization.py and scrape_and_reload.py
-5. Verify all dashboards
+## NEXT SESSION: FINALIZE DB REBUILD
+1. Test Railway API access from bash (new domain allowlist)
+2. Export Feras + Sonny PR data from DB, normalize exercise names to lowercase
+3. Combine all 6 users into master insert file (255 total PRs: 94+76+56+29+41+23, minus any Feras/Sonny adjustment)
+4. Wipe PRs table, insert all approved data
+5. Fix ATG split squat normalization in codebase
+6. Verify all dashboards
 
 ## CHANGE LOG
+- **Feb 14, 2026 (session 4)**: Completed Dan's PR audit (94 PRs from 155 messages). All 4 Discord users now approved. Pushed all audit files to `ttm-dashboard/data/` on GitHub. Added Railway domains to Claude sandbox allowlist (ttm-metrics-api-production.up.railway.app, dashboard-production-79f2.up.railway.app). Discovered main.py on GitHub (1.4KB) diverged from deployed version (~44KB with all routes) — DO NOT overwrite. Updated PROJECT-STATUS.md with audit file locations and next steps. Still need: export Feras+Sonny data, combine all 6 users, wipe+insert DB.
 - **Feb 14, 2026 (session 3)**: Manual PR audit. Extracted raw Discord dump (314 messages). Built approved PR lists for Warhound (76 PRs), Zioz (29 PRs), John (56 PRs) via side-by-side RAW vs NORMALIZED review with Dan. Discovered scraper was missing ~70+ Warhound PRs (lbs x format), Dan's "for" format entries, all of John's reversed-format entries. Dan (coach) PR list still pending — next session. No DB changes made yet. Identified ATG split squat normalization bug.
 - **Feb 14, 2026 (session 2)**: Data cleanup complete. Built admin rescrape endpoint (`GET /api/admin/rescrape?key=...`) so Dan doesn't need Railway CLI. Added `requests` to requirements.txt. Added `TTM_BOT_TOKEN` env var to API service. Rescrape wipes only Discord-sourced PRs, preserves Feras (41) + Sonny (23) manual PRs. Ran rescrape: 842 dirty PRs → 267 clean PRs (203 scraped + 64 preserved). 158 unique exercises → 119. Dashboard verified working with clean data. API bumped to v1.5.1.
 - **Feb 14, 2026 (session 1)**: Investigated dirty PR data (842 records, 158 exercise names — mix of old un-normalized + scraper output). Root cause: scraper ran with --execute not --wipe. Synced normalization between bot and scraper (bot was using older incomplete rules). Removed TRX auto-append rules from both files. Bot `exercise_normalization.py` now has complete rules from the 100-question session. Next: run scraper with --wipe.

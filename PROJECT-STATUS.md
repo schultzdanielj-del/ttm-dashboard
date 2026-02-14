@@ -1,4 +1,4 @@
-# TTM Project Status — Last Updated Feb 13, 2026
+# TTM Project Status — Last Updated Feb 14, 2026
 
 ## HOW TO USE THIS FILE
 Claude: Read this FIRST at the start of every conversation. Pull from `schultzdanielj-del/ttm-dashboard/PROJECT-STATUS.md`. Dan doesn't write code — just implement and show results. No enthusiasm, no motivational language. Direct and mechanical.
@@ -24,13 +24,16 @@ Claude: Read this FIRST at the start of every conversation. Pull from `schultzda
 - **Main file**: `main.py` (~42KB) — FastAPI v1.4.0
 - **Database**: `database.py` — PostgreSQL on Railway, 10 SQLAlchemy models
 - **Key endpoint**: `GET /api/dashboard/{unique_code}/full` returns everything in one call
+- **Scraper**: `scrape_and_reload.py` — wipes PR table and re-scrapes Discord PR channel through normalization. Run with `railway run python scrape_and_reload.py --wipe`
 - **Features working**: PR logging, fuzzy exercise matching (now aggregates ALL name variants), workout plans, deload count tracking, core foods toggle, exercise swaps, user notes, 96h session tracking, XP/leveling, member management with unique codes
 - **Debug endpoint**: `GET /api/debug/{unique_code}/exercise-names` — shows PR name groups and workout plan match results
 
 ### 3. discord-bot
 - **Main file**: `PRBot.py` (39KB)
-- **Supporting**: `exercise_normalization.py`, `fuzzy_matching.py`
-- **Note**: Still has legacy `pr_tracker.db` SQLite in repo
+- **Supporting**: `exercise_normalization.py` (canonical normalization rules), `fuzzy_matching.py`
+- **All commands use API** (PostgreSQL) — migrated from SQLite on Feb 13
+- **XP/weekly logs/core foods** still use local SQLite (bot-specific, not shared)
+- **Note**: Legacy `pr_tracker.db` SQLite still in repo (historical artifact, not used)
 
 ### 4. ttm-mcp-test — unused test repo, ignore
 
@@ -50,11 +53,20 @@ PRs, Workouts, WorkoutCompletions, DashboardMembers, CoreFoodsCheckins, UserNote
 - Fuzzy exercise name matching (normalization + abbreviation expansion + similarity scoring)
 - Dashboard member system with unique codes and URLs
 
-## KNOWN DATA ISSUE
-- PR table only has data from Feb 8-13, 2026 (486 records, 64 unique exercise names)
-- Exercise names are fragmented across variants (e.g. "chest supported dumbbell row" vs "chest supported db rows")
-- No historical data before Feb 8 — need to determine if this is expected or if data was lost in a migration
-- API v1.4.0 now aggregates across name variants for pr-history and best PR lookups
+## CRITICAL DATA STATUS — PR TABLE IS DIRTY
+- **842 PRs** currently in database, **158 unique exercise names** — this is wrong
+- Data is a mix of: old un-normalized records (Feb 8, title-cased names like "Flat DB Bench Press"), organic bot logging (Feb 9-12), and scraper output (Feb 13, lowercase normalized names)
+- The scraper ran on Feb 13 with `--execute` instead of `--wipe`, so it added records on top of the old mess instead of replacing them
+- **Fix**: Run `scrape_and_reload.py --wipe` via Railway CLI. This will wipe all 842 records, re-scrape the Discord PR channel (Jan 10 - present), and reload through the normalization function. Expected result: ~200-250 clean PRs, ~75-80 unique exercises
+- **Normalization is now synced**: Bot's `exercise_normalization.py` and scraper's inline normalization are identical as of Feb 14. Both had TRX auto-append rules removed (too ambiguous)
+- **Message IDs**: Current data has 0 unique message_ids stored — the `message_id` field is empty on old records. The scraper will fix this.
+
+## EXERCISE NORMALIZATION
+- **Canonical source**: `discord-bot/exercise_normalization.py` (updated Feb 14)
+- **Also embedded in**: `ttm-metrics-api/scrape_and_reload.py` (must stay in sync)
+- **Rules developed from**: ~100 Q&A questions with Dan about how exercises should be named
+- **Covers**: typo corrections, abbreviation expansion (db/bb/bw/kb/ez/rdl/ohp/etc), equipment synonyms, compound words, plural singularization, position reordering, exercise-specific rules (squats, deadlifts, presses, rows, pulldowns, curls, extensions, etc), incline angle normalization, duplicate word removal
+- **TRX auto-append rules removed** (Feb 14) — "trx bicep" and "trx tricep" are too ambiguous to auto-normalize
 
 ## WHAT'S NOT DONE YET
 1. **Deload cascade** — API just increments completion count and resets on 7-day gap. Missing: first-to-6 triggers cascade, others get 1 more session, 10-day max auto-deload, 7-day inactivity auto-reset
@@ -63,6 +75,11 @@ PRs, Workouts, WorkoutCompletions, DashboardMembers, CoreFoodsCheckins, UserNote
 4. **Hi/Lo PR detection** — Spec describes it (when 5lb increment > 15% of weight, show two PRs) but not implemented
 5. **Workout completion increment** — Logging individual exercises works, but nothing increments the deload completion count from the dashboard. The `/log` endpoint logs PRs and tracks sessions but doesn't call workout completion.
 6. **"Too heavy" for timed exercises** — Threshold is 60s per spec, partially implemented in frontend
+
+## IMMEDIATE NEXT STEPS
+1. **Run the scraper** — `railway run python scrape_and_reload.py --wipe` to get clean data
+2. **Verify bot redeploy** — Bot pushed to main with updated normalization, should auto-deploy on Railway. Verify new PRs use correct normalization
+3. **Verify dashboard** — After scrape, check that PR history graphs and best-PR lookups show clean data
 
 ## CRITICAL URLS
 - Dashboard (Dan's): `https://dashboard-production-79f2.up.railway.app/{DAN_UNIQUE_CODE}`
@@ -79,9 +96,12 @@ PRs, Workouts, WorkoutCompletions, DashboardMembers, CoreFoodsCheckins, UserNote
 
 ## NEXT CONVERSATION STARTUP CHECKLIST
 1. Read this file from GitHub
-2. Check if Chrome extension is connected — if yes, open Railway dashboard + live dashboard to verify deployment
-3. Ask Dan what to work on next
-4. At END of conversation, update this file with what changed
+2. Read `ttm-dashboard-spec.md` from same repo
+3. Check if Chrome extension is connected — if yes, open Railway dashboard + live dashboard to verify deployment
+4. Ask Dan what to work on next
+5. At END of conversation, update this file with what changed
 
 ## CHANGE LOG
+- **Feb 14, 2026**: Investigated dirty PR data (842 records, 158 exercise names — mix of old un-normalized + scraper output). Root cause: scraper ran with --execute not --wipe. Synced normalization between bot and scraper (bot was using older incomplete rules). Removed TRX auto-append rules from both files. Bot `exercise_normalization.py` now has complete rules from the 100-question session. Next: run scraper with --wipe.
+- **Feb 13, 2026 (earlier chat, not this project)**: Scraper built and run. Bot migrated from SQLite to API for all commands. 203 clean PRs loaded. But scraper used --execute not --wipe, leaving old data in place.
 - **Feb 13, 2026 (session 2)**: API v1.4.0 — fixed PR history to aggregate across all exercise name variants via `_find_all_matching_names()`. Added debug endpoint. Identified data-only-spans-6-days issue (Feb 8-13).

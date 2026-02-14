@@ -1,0 +1,349 @@
+================================================================================
+ZIOZ (Dan I) — RAW vs NORMALIZED COMPARISON (REVISED)
+user_id: 103351819119398912 | username: dan_i
+================================================================================
+
+--- MSG 1 | 2026-01-20 | msg_id: 1463247872366612545 ---
+RAW: Ate the core foods today ! Feeling full and apparently half the calories were eaten
+  → SKIP (core foods)
+
+
+--- MSG 2 | 2026-01-23 | msg_id: 1464344300199481503 ---
+RAW: Ate the core foods today again 👍
+  → SKIP (core foods)
+
+
+--- MSG 3 | 2026-01-24 | msg_id: 1464633008031010922 ---
+RAW: 30 degree rows x8 45 degree rows x6
+  → #1  trx row | BW/8
+  → #2  trx row | BW/6
+
+
+--- MSG 4 | 2026-01-24 | msg_id: 1464633130337042436 ---
+RAW: Body weight prisoner squats 20
+  → #3  squat | BW/20
+
+
+--- MSG 5 | 2026-01-24 | msg_id: 1464633211098239039 ---
+RAW: Push ups 7
+  → #4  pushup | BW/7
+
+
+--- MSG 6 | 2026-01-24 | msg_id: 1464633257567195190 ---
+RAW: Plank 16 seconds
+  → #5  plank | BW/16
+
+
+--- MSG 7 | 2026-01-24 | msg_id: 1464633367747236121 ---
+RAW: Say "45 degree suspension row bw/6"
+  → SKIP (quoting Dan's instructions)
+
+
+--- MSG 8 | 2026-01-24 | msg_id: 1464633439750721770 ---
+RAW: 45 degree suspension row bw/6
+  → SKIP (duplicate of 45° row in MSG 3)
+
+
+--- MSG 9 | 2026-01-24 | msg_id: 1464633496847908916 ---
+RAW: prisoner squat bw/20
+  → SKIP (duplicate of squat in MSG 4)
+
+
+--- MSG 10 | 2026-01-24 | msg_id: 1464633672413221026 ---
+RAW: Push-ups 7
+  → SKIP (duplicate of pushup in MSG 5)
+
+
+--- MSG 11 | 2026-01-24 | msg_id: 1464633762829697117 ---
+RAW: Push ups bw/7
+  → SKIP (duplicate of pushup in MSG 5)
+
+
+--- MSG 12 | 2026-01-24 | msg_id: 1464633849794265191 ---
+RAW: Plank bw/16 seconds
+  → SKIP (duplicate of plank in MSG 6)
+
+
+--- MSG 13 | 2026-01-24 | msg_id: 1464633926374002699 ---
+RAW: Plank bw/16
+  → SKIP (duplicate of plank in MSG 6)
+
+
+--- MSG 14 | 2026-01-24 | msg_id: 1464634457792188448 ---
+RAW: Ya I ain't programming bots lol 😂
+  → SKIP (commentary)
+
+
+--- MSG 15 | 2026-01-24 | msg_id: 1464655666391155019 ---
+RAW: Core foods hit today
+  → SKIP (core foods)
+
+
+--- MSG 16 | 2026-01-25 | msg_id: 1464953326138560685 ---
+RAW: glut bridges 2 second hold at the top bw/10
+  → #6  glute bridge | BW/10
+
+
+--- MSG 17 | 2026-01-25 | msg_id: 1464953513556574312 ---
+RAW: Deadbugs each side bw/10
+  → #7  deadbug | BW/10
+
+
+--- MSG 18 | 2026-01-25 | msg_id: 1464953635417882674 ---
+RAW: Incline push ups bw/8
+  → #8  incline pushup | BW/8
+
+
+--- MSG 19 | 2026-01-25 | msg_id: 1464953788698722467 ---
+RAW: Suspension Trainer close grip pull ups bw/12
+  → #9  trx close grip pullup | BW/12
+
+
+--- MSG 20 | 2026-01-25 | msg_id: 1465107836681060668 ---
+RAW: Core foods eaten
+  → SKIP (core foods)
+
+
+--- MSG 21 | 2026-01-26 | msg_id: 1465401515459219607 ---
+RAW: Core foods hit today
+  → SKIP (core foods)
+
+
+--- MSG 22 | 2026-01-27 | msg_id: 1465764079619805297 ---
+RAW: Core foods hit today
+  → SKIP (core foods)
+
+
+--- MSG 23 | 2026-01-27 | msg_id: 1465765855412621333 ---
+RAW: I think it will be kook when we see the results
+  → SKIP (commentary)
+
+
+--- MSG 24 | 2026-01-28 | msg_id: 1466146282400776304 ---
+RAW: Core foods eaten
+  → SKIP (core foods)
+
+
+--- MSG 25 | 2026-01-29 | msg_id: 1466483807929634870 ---
+RAW: Core foods hit again
+  → SKIP (core foods)
+
+
+--- MSG 26 | 2026-01-29 | msg_id: 1466489320121831732 ---
+RAW: TRX tricep extension bw/15
+  → #10 trx tricep extension | BW/15
+
+
+--- MSG 27 | 2026-01-29 | msg_id: 1466491492229972071 ---
+RAW: TRX bicep extension bw/12
+  → #11 trx bicep curl | BW/12
+
+
+--- MSG 28 | 2026-01-29 | msg_id: 1466495242365571114 ---
+RAW: Plank bw/35
+  → #12 plank | BW/35
+
+
+--- MSG 29 | 2026-01-29 | msg_id: 1466498429080436859 ---
+RAW: Leg raises bw/13
+  → #13 leg raise | BW/13
+
+
+--- MSG 30 | 2026-01-30 | msg_id: 1466840033787904074 ---
+RAW: Core foods devoured
+  → SKIP (core foods)
+
+
+--- MSG 31 | 2026-01-30 | msg_id: 1466840086808367250 ---
+RAW: Eaten
+  → SKIP (core foods continuation)
+
+
+--- MSG 32 | 2026-01-31 | msg_id: 1467220701319790725 ---
+RAW: Ate core foods
+  → SKIP (core foods)
+
+
+--- MSG 33 | 2026-02-01 | msg_id: 1467611820184572107 ---
+RAW: Core foods eaten
+  → SKIP (core foods)
+
+
+--- MSG 34 | 2026-02-02 | msg_id: 1467934143349395456 ---
+RAW: Core foods eaten
+  → SKIP (core foods)
+
+
+--- MSG 35 | 2026-02-02 | msg_id: 1467949617835413566 ---
+RAW: ATG split squats bw/10
+  → #14 atg split squat | BW/10
+
+
+--- MSG 36 | 2026-02-02 | msg_id: 1467954867107790888 ---
+RAW: Reverse Lunges bw/16
+  → #15 reverse lunge | BW/16
+
+
+--- MSG 37 | 2026-02-02 | msg_id: 1467958389052280922 ---
+RAW: Push ups bw/12
+  → #16 pushup | BW/12
+
+
+--- MSG 38 | 2026-02-02 | msg_id: 1467961574370054189 ---
+RAW: Prone Angels bw/93
+  → #17 prone angel | BW/93
+
+
+--- MSG 39 | 2026-02-03 | msg_id: 1468273786309709844 ---
+RAW: Core foods eaten
+  → SKIP (core foods)
+
+
+--- MSG 40 | 2026-02-04 | msg_id: 1468646188092756051 ---
+RAW: Core foods eaten
+  → SKIP (core foods)
+
+
+--- MSG 41 | 2026-02-05 | msg_id: 1468878186128609398 ---
+RAW: TRX high rows bw/8
+  → #18 trx high row | BW/8
+
+
+--- MSG 42 | 2026-02-05 | msg_id: 1468882019600695296 ---
+RAW: TRX low rows bw/11
+  → #19 trx low row | BW/11
+
+
+--- MSG 43 | 2026-02-05 | msg_id: 1468884828156858531 ---
+RAW: Towel Hamstring curls bw/10
+  → #20 slider leg curl | BW/10
+
+
+--- MSG 44 | 2026-02-05 | msg_id: 1468884957001814077 ---
+RAW: No have the find that yoga ball so did this modification instead
+  → SKIP (commentary)
+
+
+--- MSG 45 | 2026-02-05 | msg_id: 1468888391344193546 ---
+RAW: Body weight hip thrusts bw/60
+  → #21 hip thrust | BW/60
+
+
+--- MSG 46 | 2026-02-05 | msg_id: 1469044613170856132 ---
+RAW: So I did switch up my angel when I couldn't do more at the 45 degree...
+  → SKIP (commentary)
+
+
+--- MSG 47 | 2026-02-05 | msg_id: 1469044934039568384 ---
+RAW: So it said anywhere between 30-90 so I assumed just go at it as hard as you can...
+  → SKIP (commentary)
+
+
+--- MSG 48 | 2026-02-05 | msg_id: 1469053122545586440 ---
+RAW: Core foods eaten
+  → SKIP (core foods)
+
+
+--- MSG 49 | 2026-02-06 | msg_id: 1469433476641067229 ---
+RAW: Ate my core foods
+  → SKIP (core foods)
+
+
+--- MSG 50 | 2026-02-08 | msg_id: 1469984489580134481 ---
+RAW: Core foods eaten yesterday
+  → SKIP (core foods)
+
+
+--- MSG 51 | 2026-02-08 | msg_id: 1470053769621536990 ---
+RAW: !progress
+  → SKIP (bot command)
+
+
+--- MSG 52 | 2026-02-08 | msg_id: 1470054180331847682 ---
+RAW: Ah ok
+  → SKIP (commentary)
+
+
+--- MSG 53 | 2026-02-08 | msg_id: 1470059350784741530 ---
+RAW: TRX tricep extension bw/16
+  → #22 trx tricep extension | BW/16
+
+
+--- MSG 54 | 2026-02-08 | msg_id: 1470060634904334628 ---
+RAW: TRX bicep curls bw/16
+  → #23 trx bicep curl | BW/16
+
+
+--- MSG 55 | 2026-02-08 | msg_id: 1470062932179288085 ---
+RAW: Plank bw/37
+  → #24 plank | BW/37
+
+
+--- MSG 56 | 2026-02-08 | msg_id: 1470063262627266591 ---
+RAW: Feeling a crazy pump today boys
+  → SKIP (commentary)
+
+
+--- MSG 57 | 2026-02-08 | msg_id: 1470065929739042959 ---
+RAW: Leg raises bw/17
+  → #25 leg raise | BW/17
+
+
+--- MSG 58 | 2026-02-08 | msg_id: 1470128672236109832 ---
+RAW: Core foods eaten
+  → SKIP (core foods)
+
+
+--- MSG 59 | 2026-02-10 | msg_id: 1470572464000995339 ---
+RAW: Ate my core foods
+  → SKIP (core foods)
+
+
+--- MSG 60 | 2026-02-10 | msg_id: 1470696182354411564 ---
+RAW: ATG split squats bw/11
+  → #26 atg split squat | BW/11
+
+
+--- MSG 61 | 2026-02-10 | msg_id: 1470700967044321333 ---
+RAW: Reverse Lunges bw/20
+  → #27 reverse lunge | BW/20
+
+
+--- MSG 62 | 2026-02-10 | msg_id: 1470703884266635349 ---
+RAW: Push ups bw/13
+  → #28 pushup | BW/13
+
+
+--- MSG 63 | 2026-02-10 | msg_id: 1470706674141499413 ---
+RAW: Prone angels bw/96
+  → #29 prone angel | BW/96
+
+
+--- MSG 64 | 2026-02-10 | msg_id: 1470874053928685670 ---
+RAW: Core foods eaten
+  → SKIP (core foods)
+
+
+--- MSG 65 | 2026-02-11 | msg_id: 1471225998686162964 ---
+RAW: Ate me core foods
+  → SKIP (core foods)
+
+
+--- MSG 66 | 2026-02-12 | msg_id: 1471596624978640938 ---
+RAW: Core foods eaten
+  → SKIP (core foods)
+
+
+--- MSG 67 | 2026-02-13 | msg_id: 1471932597822161009 ---
+RAW: Ate my core foods
+  → SKIP (core foods)
+
+
+================================================================================
+SUMMARY: 29 PRs from 67 messages (29 workout, 38 non-PR)
+================================================================================
+
+NOTE: Normalization ruleset needs fix — ATG split squats must NOT map to
+bulgarian split squat or rear foot elevated split squat. They are a
+distinct exercise used by multiple members.
+================================================================================

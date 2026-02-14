@@ -15,7 +15,7 @@ Claude: Read this FIRST at the start of every conversation. Pull from `schultzda
 
 ### ✅ Fully working
 - **GitHub read/write** on all repos (discord-bot, ttm-metrics-api, ttm-dashboard) — push to main = auto-deploy
-- **API repo in sync with production** — main.py is the full 47KB v1.5.6 with all routes + admin_rebuild. Safe to push changes.
+- **API repo structure changed (session 9)** — main.py was split into 3 files due to GitHub MCP tool size limits (~25KB max per file push). See API section below.
 - **Discord bot repo in sync** — PRBot.py is 39KB, full code, confirmed matching deployed version.
 - **API access via curl** — can hit all endpoints from bash container
 - **Dashboard access via curl** — can fetch frontend from bash container
@@ -24,10 +24,16 @@ Claude: Read this FIRST at the start of every conversation. Pull from `schultzda
 - **Admin config endpoint** — `GET /api/admin/config?key=<ADMIN_KEY>` returns bot token and admin key from env vars.
 - **Admin SQL endpoint** — `GET /api/admin/sql?key=<ADMIN_KEY>&q=<SELECT...>` runs read-only SQL queries against the database.
 - **Admin rebuild-prs endpoint** — `POST /api/admin/rebuild-prs` with `{"key": "<ADMIN_KEY>", "prs": [...]}` wipes and rebuilds the entire PRs table.
+- **Admin bulk-core-foods endpoint** — `POST /api/admin/bulk-core-foods` with `{"key": "<ADMIN_KEY>", "records": [...]}` bulk inserts core foods check-ins (bypasses date validation).
 
 ### 🔧 Works with Dan's help (just ask at session start)
 - **Railway dashboard via Chrome** — ask Dan to have Railway open in browser, then use Chrome extension to view deploys, logs, env vars
 - **Discord via Chrome** — ask Dan to have Discord open in browser for channel visibility
+
+### ⚠️ GitHub MCP file size limitation
+- `push_files` and `create_or_update_file` silently truncate content over ~25KB
+- Workaround: split large files into multiple modules, each under 25KB
+- This is why main.py was refactored into 3 files in session 9
 
 ## REPOSITORIES (all under github.com/schultzdanielj-del)
 
@@ -41,7 +47,14 @@ Claude: Read this FIRST at the start of every conversation. Pull from `schultzda
 
 ### 2. ttm-metrics-api (FastAPI backend)
 - **Deployed**: Railway at `https://ttm-metrics-api-production.up.railway.app`
-- **Version**: v1.5.6 — main.py (47KB) with all routes, repo synced with production
+- **Version**: v1.5.7
+- **File structure (refactored session 9)**:
+  - `main.py` (~1KB) — entry point, creates FastAPI app, includes all routers
+  - `main_routes.py` (~18KB) — helper functions, exercise matching, PR endpoints, workout endpoints, XP endpoints, member endpoints
+  - `main_routes_p2.py` (~19KB) — dashboard data endpoints, notes, swaps, sessions, `/full`, weekly logs, core foods, debug, admin SQL, admin rescrape
+  - `admin_dump.py` — full database export endpoint
+  - `admin_rebuild.py` — PR table wipe+insert endpoint
+  - `admin_core_foods.py` — bulk core foods insert endpoint (new session 9)
 - **Database**: `database.py` — PostgreSQL on Railway, 10 SQLAlchemy models
 - **Key endpoint**: `GET /api/dashboard/{unique_code}/full` returns everything in one call
 - **Scraper**: `scrape_and_reload.py` — standalone script (can also be triggered via admin endpoint)
@@ -50,6 +63,7 @@ Claude: Read this FIRST at the start of every conversation. Pull from `schultzda
   - `GET /api/admin/sql?key=<ADMIN_KEY>&q=<SELECT...>` — read-only SQL queries
   - `GET /api/admin/rescrape?key=<ADMIN_KEY>` — wipes Discord-sourced PRs, re-scrapes channel (DEPRECATED — use rebuild-prs instead)
   - `POST /api/admin/rebuild-prs` — body: `{"key": "<ADMIN_KEY>", "prs": [...]}` — wipes entire PRs table, inserts provided records
+  - `POST /api/admin/bulk-core-foods` — body: `{"key": "<ADMIN_KEY>", "records": [...]}` — bulk inserts core foods (bypasses 2-day date validation, skips duplicates)
   - `GET /api/admin/dump` — full database export
 - **ADMIN_KEY**: `4ifQC_DLzlXM1c5PC6egwvf2p5GgbMR3`
 - **Features working**: PR logging, fuzzy exercise matching (aggregates ALL name variants), workout plans, deload count tracking, core foods toggle, exercise swaps, user notes, 96h session tracking, XP/leveling, member management with unique codes
@@ -59,9 +73,10 @@ Claude: Read this FIRST at the start of every conversation. Pull from `schultzda
 ### 3. discord-bot
 - **Main file**: `PRBot.py` (39KB) — confirmed in sync with deployed version
 - **Supporting**: `exercise_normalization.py` (canonical normalization rules), `fuzzy_matching.py`
-- **All commands use API** (PostgreSQL) — migrated from SQLite on Feb 13
-- **XP/weekly logs/core foods** still use local SQLite (bot-specific, not shared)
-- **Note**: Legacy `pr_tracker.db` SQLite still in repo (historical artifact, not used)
+- **All PR commands use API** (PostgreSQL) — migrated from SQLite on Feb 13
+- **Core foods check-ins still write to local SQLite** — needs migration to API (next step)
+- **XP/weekly logs** also still use local SQLite
+- **Bot command**: `!dump_core_foods` — exports all core foods from SQLite as JSON (used for migration)
 
 ### 4. ttm-mcp-test — unused test repo, ignore
 
@@ -70,9 +85,9 @@ PRs, Workouts, WorkoutCompletions, DashboardMembers, CoreFoodsCheckins, UserNote
 
 **Direct DB access**: Use DATABASE_PUBLIC_URL from Claude memory with psycopg2 in bash. Can run arbitrary SQL reads and writes.
 
-## CURRENT DATA STATUS — PR DATABASE REBUILT AND VERIFIED ✅
+## CURRENT DATA STATUS
 
-### PR Table: 299 records, 99 unique exercises, 6 users — ALL NORMALIZED
+### PR Table: 299 records, 99 unique exercises, 6 users — ALL NORMALIZED ✅
 | User | user_id | PRs | Source |
 |------|---------|-----|--------|
 | Dan (coach) | 718992882182258769 | 94 | Discord audit (Jan 11 – Feb 12) |
@@ -82,30 +97,18 @@ PRs, Workouts, WorkoutCompletions, DashboardMembers, CoreFoodsCheckins, UserNote
 | Sonny | ND_sonny_a1b2c3d4e5f6 | 23 | API export, normalized |
 | Feras | 919580721922859008 | 21 | API export, deduped (41→21), normalized |
 
-### How the rebuild was done (session 6)
-1. Parsed 4 Discord audit files from `ttm-dashboard/data/` (Dan, Travis, John, Zioz)
-2. Exported Feras + Sonny data via `/api/admin/sql` endpoint
-3. Feras had 20 duplicate PRs (same exercise/weight/reps/timestamp) — deduped to 21 unique
-4. Applied normalization from `exercise_normalization.py` to ALL exercise names
-5. Generated master dataset: 299 PRs, 99 unique exercises
-6. POSTed to `/api/admin/rebuild-prs` endpoint — wiped 267 old records, inserted 299 normalized
-7. Verified via SQL: counts match per user, all exercise names normalized
+### Core Foods Table: 60 records, 5 users — MIGRATED ✅ (session 9)
+| User | user_id | Check-ins | Date Range |
+|------|---------|-----------|------------|
+| Dan (coach) | 718992882182258769 | 21 | Jan 15 – Feb 13 |
+| Dan I (Zioz) | 103351819119398912 | 21 | Jan 17 – Feb 13 |
+| John | 607043556162666514 | 9 | Jan 23 – Feb 1 |
+| Travis (Ben) | 188471109363040256 | 8 | Feb 4 – Feb 11 |
+| Andrew | 780219213389234196 | 1 | Feb 12 |
 
-### Normalization applied
-- DB→dumbbell, BB→barbell, BW→bodyweight
-- Plurals→singular (curls→curl, rows→row, etc.)
-- Abbreviations expanded (UH→underhand, OH→overhead, RDF→rear delt fly)
-- skullcrushers→tricep extension, ab wheel→ab rollout
-- Compound words normalized (chin up→chinup, pull up→pullup)
-- Title Case→lowercase throughout
+**Migration method**: Extracted from bot's SQLite via `!dump_core_foods` command, bulk inserted via `/api/admin/bulk-core-foods` endpoint.
 
-### Approved PR audit files (in `ttm-dashboard/data/`)
-| File | User | PRs |
-|------|------|-----|
-| `data/dan_raw_vs_normalized.txt` | Dan | 94 |
-| `data/warhound_raw_vs_normalized.txt` | Travis | 76 |
-| `data/john_raw_vs_normalized.txt` | John | 56 |
-| `data/zioz_raw_vs_normalized.txt` | Dan I | 29 |
+**⚠️ Bot still writes new core foods to SQLite.** Next step: update bot to POST to API instead.
 
 ## EXERCISE NORMALIZATION
 - **Canonical source**: `discord-bot/exercise_normalization.py` (updated Feb 14)
@@ -119,7 +122,8 @@ PRs, Workouts, WorkoutCompletions, DashboardMembers, CoreFoodsCheckins, UserNote
 - Full dashboard UI connected to live API (no mock data)
 - Single-endpoint data fetch on mount (`/full`)
 - Clean PR data with 299 normalized records across 6 users
-- Fuzzy exercise matching connecting workout plan names to PR data (e.g. "Head Supported RDF" → "head supported rear delt fly")
+- Core foods data migrated — 60 historical check-ins across 5 users
+- Fuzzy exercise matching connecting workout plan names to PR data
 - Per-exercise logging with real-time PR detection (e1rm comparison)
 - Core foods 7-day rolling calendar with tap/double-tap, 3-day edit window
 - Exercise swap and revert with DB persistence
@@ -130,14 +134,16 @@ PRs, Workouts, WorkoutCompletions, DashboardMembers, CoreFoodsCheckins, UserNote
 - Dashboard member system with unique codes and URLs
 - Admin rebuild-prs endpoint for complete DB reconstruction
 - Admin SQL endpoint for ad-hoc queries
+- Admin bulk-core-foods endpoint for historical data migration
 
 ## WHAT'S NOT DONE YET
-1. **Deload cascade** — API just increments completion count and resets on 7-day gap. Missing: first-to-6 triggers cascade, others get 1 more session, 10-day max auto-deload, 7-day inactivity auto-reset
-2. **UP NEXT / BEHIND badges** — Frontend hardcodes `workouts[0]` as UP NEXT. No real rotation tracking server-side. Need: sequential A→E tracking, 5-day same-workout lockout, 3-consecutive-day rest nudge, N-1 frequency, BEHIND badge with 3-day catchup
-3. **Strength gains panel** — Shows "--" placeholder. Needs cycle-over-cycle e1rm comparison
-4. **Hi/Lo PR detection** — Spec describes it (when 5lb increment > 15% of weight, show two PRs) but not implemented
-5. **Workout completion increment** — Logging individual exercises works, but nothing increments the deload completion count from the dashboard. The `/log` endpoint logs PRs and tracks sessions but doesn't call workout completion.
-6. **"Too heavy" for timed exercises** — Threshold is 60s per spec, partially implemented in frontend
+1. **Bot core foods → API migration** — Bot still writes new check-ins to SQLite. Need to update bot to POST to API so all future data goes to PostgreSQL.
+2. **Deload cascade** — API just increments completion count and resets on 7-day gap. Missing: first-to-6 triggers cascade, others get 1 more session, 10-day max auto-deload, 7-day inactivity auto-reset
+3. **UP NEXT / BEHIND badges** — Frontend hardcodes `workouts[0]` as UP NEXT. No real rotation tracking server-side.
+4. **Strength gains panel** — Shows "--" placeholder. Needs cycle-over-cycle e1rm comparison
+5. **Hi/Lo PR detection** — Spec describes it but not implemented
+6. **Workout completion increment** — Logging individual exercises works, but nothing increments the deload completion count from the dashboard.
+7. **"Too heavy" for timed exercises** — Threshold is 60s per spec, partially implemented in frontend
 
 ## CRITICAL URLS
 - Dashboard (Dan's): `https://dashboard-production-79f2.up.railway.app/UUtTjHrS4WP6uQzqd0uPcA`
@@ -146,6 +152,7 @@ PRs, Workouts, WorkoutCompletions, DashboardMembers, CoreFoodsCheckins, UserNote
 - Members list: `GET /api/dashboard/members`
 - Admin rebuild: `POST /api/admin/rebuild-prs` (body: `{"key": "...", "prs": [...]}`)
 - Admin SQL: `GET /api/admin/sql?key=...&q=SELECT...`
+- Admin bulk core foods: `POST /api/admin/bulk-core-foods` (body: `{"key": "...", "records": [...]}`)
 
 ## DAN'S PREFERENCES
 - Iterates conversationally — Claude handles ALL code, pushes to GitHub
@@ -164,10 +171,13 @@ PRs, Workouts, WorkoutCompletions, DashboardMembers, CoreFoodsCheckins, UserNote
 6. At END of conversation, update this file with what changed
 
 ## NEXT SESSION: PRIORITIES
-1. Fix ATG split squat normalization in both exercise_normalization.py and scrape_and_reload.py
-2. Resume feature work — deload cascade, UP NEXT/BEHIND badges, strength gains panel, or whatever Dan wants
+1. **Update bot to write core foods to API** — so new check-ins go to PostgreSQL instead of SQLite
+2. Fix ATG split squat normalization in both exercise_normalization.py and scrape_and_reload.py
+3. Resume feature work — deload cascade, UP NEXT/BEHIND badges, strength gains panel, or whatever Dan wants
 
 ## CHANGE LOG
+- **Feb 14, 2026 (session 9)**: Core foods migration from bot SQLite to PostgreSQL. Created `admin_core_foods.py` with bulk insert endpoint (bypasses 2-day date validation). Extracted 60 check-ins via `!dump_core_foods` bot command. Bulk inserted to PostgreSQL: Dan 21, Zioz 21, John 9, Ben 8, Andrew 1. Accidentally truncated main.py during router wiring — discovered GitHub MCP tools silently truncate files >25KB. Refactored API into 3 files: `main.py` (1KB entry point), `main_routes.py` (18KB core routes), `main_routes_p2.py` (19KB dashboard/admin routes). API v1.5.7 deployed and verified healthy. Bot still writes new core foods to SQLite — next step is migrating bot to use API.
+- **Feb 14, 2026 (session 8)**: Deployed `!dump_core_foods` command to bot for data extraction. Commit 016665912ca465750d83a1cc4c1cdb575e204a22.
 - **Feb 14, 2026 (session 6)**: PR database rebuild complete. Added `/api/admin/sql` endpoint (v1.5.5) for read-only SQL queries. Added `/api/admin/rebuild-prs` endpoint (v1.5.6, new file `admin_rebuild.py`) for full PR table wipe+insert. Exported Feras (41 PRs, deduped to 21) and Sonny (23 PRs) via SQL endpoint. Parsed 4 Discord audit files. Applied normalization from exercise_normalization.py to all 299 PRs. POSTed master dataset to rebuild endpoint: 267 old → 299 normalized. Verified: 6 users, 99 unique exercises, all lowercase, no abbreviations. Data cleanup arc is COMPLETE.
 - **Feb 14, 2026 (session 5, end)**: Railway API token created and stored in Claude memory. Added `backboard-v3.railway.app` to sandbox allowlist. Decided: Railway token in memory, bot token behind /api/admin/config endpoint. Updated access model — only one item remaining (config endpoint). Updated next session priorities. Cleaned up duplicate memory edits.
 - **Feb 14, 2026 (session 5, start)**: Restored full main.py to API repo — recovered 42KB v1.4.0 from git history (commit a613c35), added admin_dump router, bumped to v1.5.3. All 36 routes now live and repo matches production. Added DATABASE_PUBLIC_URL to Claude memory. Added `shuttle.proxy.rlwy.net` to sandbox allowlist for direct PostgreSQL access. Confirmed discord-bot repo is in sync (PRBot.py 39KB, not a stub). Documented full Claude access model in PROJECT-STATUS.md.
